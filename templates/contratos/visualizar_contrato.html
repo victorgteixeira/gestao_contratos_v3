@@ -1,0 +1,252 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  {% load static %}
+  <header>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <h1 class="text-center text-2xl font-semibold text-sky-900 mt-5">Exibir Contrato: {{ contrato.referencia_contrato }} - {{ contrato.nome_fornecedor }}</h1>
+  </header>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_contrato.css' %}" />
+  </head>
+  <body>
+    <div class="tab-container max-w-5xl mx-auto mt-6">
+      <ul class="tabs flex space-x-4 border-b">
+        <li class="tab active cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="dados-basicos">Dados Básicos</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="valores">Valores</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="anexos">Anexos</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="distrato">Distrato</li>
+      </ul>
+        <!-- Aba de Dados Básicos -->
+        <div class="tab-content active" id="dados-basicos">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Seção da esquerda -->
+            <div class="space-y-6">
+              <div>
+                <label for="fornecedor" class="block text-sm font-medium text-gray-700">✱ Fornecedor</label>
+                <div class="relative">
+                    <input type="text" value="{{ contrato.nome_fornecedor }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+                </div>
+              </div>
+
+              <div>
+                <label for="responsavel" class="block text-sm font-medium text-gray-700 mt-4">Responsável</label>
+                <input type="text" value="{{ contrato.responsavel }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mt-4">Status</label>
+                <input type="text" value="{{ contrato.status }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="categoria" class="block text-sm font-medium text-gray-700 mt-4">✱ Categoria</label>
+                <input type="text" value="{{ contrato.categoria }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="c_contabil" class="block text-sm font-medium text-gray-700 mt-4">Conta Relacionada</label>
+                <input type="text" name="c_contabil" id="id_c_contabil" value="{{ contrato.c_contabil }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="observacao_contrato" class="block text-sm font-medium text-gray-700 mt-4">Observação Contrato</label>
+                <input type="text" value="{{ contrato.observacao_contrato }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+            </div>
+
+            <!-- Seção da direita -->
+            <div class="space-y-6">
+              <div>
+                <label for="area_beneficiada" class="block text-sm font-medium text-gray-700">✱ Área Beneficiada</label>
+                <input type="text" value="{{ contrato.area_beneficiada }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="data_inicio" class="block text-sm font-medium text-gray-700">✱ Vigência:</label>
+                <input type="text" value="{{ contrato.data_inicio }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+                <strong for="data_fim">até</strong>
+                <input type="text"  value="{{ contrato.data_fim }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="renovacao_automatica" class="block text-sm font-medium text-gray-700 mt-4">Renovação automática (sem data de término)</label>
+                <input type="text"  value="{{ contrato.renovacao_automatica }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="pasta_biblioteca" class="block text-sm font-medium text-gray-700 mt-4">✱ Pasta da Biblioteca</label>
+                <input type="text" value="{{ contrato.pasta_biblioteca }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="tipo_gasto" class="block text-sm font-medium text-gray-700 mt-4">Imobilizado ou Despesa</label>
+                <input type="text" value="{{ contrato.tipo_gasto }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="centro_custo" class="block text-sm font-medium text-gray-700 mt-4">✱ Centro de Custo</label>
+                <input type="text" value="{{ contrato.centro_custo }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="flag_rateio" class="block text-sm font-medium text-gray-700 mt-4">Rateio?</label>
+                <input type="text" value="{{ contrato.flag_rateio }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="observacao_rateio" class="block text-sm font-medium text-gray-700 mt-4">✱ Observação do Rateio</label>
+                <input type="text" value="{{ contrato.observacao_rateio }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Valores -->
+        <div class="tab-content" id="valores">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="contratoa_pagamento" class="block text-sm font-medium text-gray-700">✱ Forma de Pagamento</label>
+              <input type="text" value="{{ contrato.forma_pagamento }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+
+            <div>
+              <label for="valor" class="block text-sm font-medium text-gray-700 mt-4">✱ Valor</label>
+              <div class="flex items-center space-x-2">
+                <input type="text" value="{{ contrato.valor }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+            </div>
+
+            <div>
+              <label for="observacao_valor" class="block text-sm font-medium text-gray-700 mt-4">Observação valor</label>
+              <input type="text" value="{{ contrato.observacao_valor }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+            <div>
+              <label for="observacao_pagamento" class="block text-sm font-medium text-gray-700 mt-4">Condição pagamento</label>
+              <input type="text" value="{{ contrato.observacao_pagamento }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+            <div>
+              <label for="indice_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Índice de reajuste</label>
+              <input type="text" value="{{ contrato.indice_reajuste }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+            <div>
+              <label for="observacao_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Observação reajuste</label>
+              <input type="text" value="{{ contrato.observacao_reajuste }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+            <div>
+              <label for="data_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Data reajuste</label>
+              <input type="text" value="{{ contrato.data_reajuste }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+            <div>
+              <label for="visibilidade_privada" class="block text-sm font-medium text-gray-700 mt-4">Flag Restrito</label>
+              <input type="text" value="{{ contrato.visibilidade_privada }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Anexos -->
+        <div class="tab-content" id="anexos">
+            <table class="min-w-full table-auto border-collapse">
+                <thead>
+                    <tr class="bg-sky-100">
+                        <th class="px-4 py-2 border-b">Tipo de Anexo</th>
+                        <th class="px-4 py-2 border-b">Arquivo</th>
+                        <th class="px-4 py-2 border-b">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Contrato anexado</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.contrato_file.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.contrato_file %}
+                                <a href="{{ contrato.contrato_file.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Imagem anexada</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.imagem.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.imagem %}
+                                <a href="{{ contrato.imagem.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Aba de Distrato -->
+        <div class="tab-content" id="distrato">
+          <div class="grid grid-cols-1 gap-6">
+            <table class="min-w-full table-auto border-collapse mt-4">
+                <thead>
+                    <tr class="bg-sky-100">
+                        <th class="px-4 py-2 border-b">Tipo de Anexo</th>
+                        <th class="px-4 py-2 border-b">Arquivo</th>
+                        <th class="px-4 py-2 border-b">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Distrato anexado</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.anexo_distrato.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.anexo_distrato %}
+                                <a href="{{ contrato.anexo_distrato.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex justify-between mt-4">
+        <button type="button" class="bg-gray-500 text-white px-6 py-2 rounded-md mb-4" onclick="window.location.href='{% url 'listar_contratos' %}'">Voltar</button>
+    </div>
+    <script src="{% static 'js/tabs.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      // Script para alternar abas
+      const tabs = document.querySelectorAll('.tab')
+      const tabContents = document.querySelectorAll('.tab-content')
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('active'))
+          tab.classList.add('active')
+          const tabId = tab.dataset.tab
+      
+          // Mostrar conteúdo correspondente
+          tabContents.forEach((content) => {
+            content.classList.remove('active')
+            if (content.id === tabId) {
+              content.classList.add('active')
+            }
+          })
+        })
+      })
+      
+      // Certifique-se de que a primeira aba e o conteúdo correspondente estão ativos inicialmente
+      document.querySelector('.tab').classList.add('active')
+      document.querySelector('.tab-content').classList.add('active')
+      
+      $(document).ready(function () {
+        // Lógica para desativar e limpar o campo centro_custo quando o id_flag_rateio estiver marcado
+        $('#id_flag_rateio')
+          .change(function () {
+            if ($(this).is(':checked')) {
+              $('#id_centro_custo').prop('disabled', true).addClass('input-disabled').val('')
+            } else {
+              $('#id_centro_custo').prop('disabled', false).removeClass('input-disabled')
+            }
+          })
+          .change()
+    </script>
+  </body>
+{% endblock %}

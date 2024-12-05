@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #2c3e50;
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.contract-details {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.contract-details th, .contract-details td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.contract-details th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    width: 40%;
+}
+
+.contract-details td {
+    background-color: #f7f7f7;
+}
+
+.download-link {
+    color: #2c3e50;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.download-link:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.contract-image {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.back-button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: white;
+    color: #2c3e50;
+}

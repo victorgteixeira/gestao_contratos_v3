@@ -1,0 +1,490 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<header>
+    <h1> Editar Contrato </h1>
+</header>
+<body>
+    <div class="tab-container">
+        <ul class="tabs">
+            <li class="tab active" data-tab="dados-basicos">Dados Básicos</li>
+            <li class="tab" data-tab="valores">Valores</li>
+            <li class="tab" data-tab="anexos">Anexos</li>
+            <li class="tab" data-tab="distrato">Distrato</li>
+        </ul>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Aba de Dados Básicos -->
+            <div class="tab-content active" id="dados-basicos">
+                <div class="form-section">
+                    <div class="left-section">
+                        <label for="fornecedor">✱ Fornecedor</label>
+                        {{ form.nome_fornecedor }}
+                        {% if form.nome_fornecedor.errors %}
+                            <div class="error">{{ form.nome_fornecedor.errors }}</div>
+                        {% endif %}
+                        <a href="{% url 'adicionar_fornecedor' %}" class="btn-mais">+</a>
+
+                        <label for="id_cnpj_fornecedor">Pesquise pelo CNPJ:</label>
+                        {{ form.cnpj_fornecedor }}
+                        {% if form.cnpj_fornecedor.errors %}
+                            <div class="error">{{ form.cnpj_fornecedor.errors }}</div>
+                        {% endif %}
+
+                        <label for="responsavel">Responsável</label>
+                        {{ form.responsavel }}
+                        {% if form.responsavel.errors %}
+                            <div class="error">{{ form.responsavel.errors }}</div>
+                        {% endif %}
+
+                        <label for="responsavel">Status</label>
+                        {{ form.status }}
+
+                        <label for="categoria">✱ Categoria</label>
+                        {{ form.categoria }}
+                        {% if form.categoria.errors %}
+                            <div class="error">{{ form.categoria.errors }}</div>
+                        {% endif %}
+                        <a href="{% url 'adicionar_categoria' %}" class="btn-mais">+</a>
+
+                        <label for="c_contabil">Conta Relacionada</label>
+                        <input type="text" name="c_contabil" id="id_c_contabil" value="{{ form.c_contabil.value }}" class="input-readonly" readonly>  
+
+                        <label for="observacao_contrato">Observação Contrato</label>
+                        {{ form.observacao_contrato }}
+                        {% if form.observacao_contrato.errors %}
+                            <div class="error">{{ form.observacao_contrato.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="right-section">
+                        <label for="area_beneficiada">✱ Área Beneficiada</label>
+                        {{ form.area_beneficiada }}
+                        {% if form.area_beneficiada.errors %}
+                            <div class="error">{{ form.area_beneficiada.errors }}</div>
+                        {% endif %}
+
+                        <div class="vigencia-container">
+                            <label for="data_inicio">✱Vigência:</label>
+                            <input type="date" name="data_inicio" id="data_inicio" value="{{ form.data_inicio.value|date:'Y-m-d' }}">
+                            {% if form.data_inicio.errors %}
+                                <div class="error">{{ form.data_inicio.errors }}</div>
+                            {% endif %}
+                            <label for="data_fim">até</label>
+                            <input type="date" name="data_fim" id="data_fim" value="{{ form.data_fim.value|date:'Y-m-d' }}">
+                            {% if form.data_fim.errors %}
+                                <div class="error">{{ form.data_fim.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <label for="renovacao_automatica">Renovação automática (sem data de término) ​</label>
+                        {{ form.renovacao_automatica }}
+
+                        <label for="pasta_biblioteca">✱ Pasta da Biblioteca</label>
+                        {{ form.pasta_biblioteca }}
+                        {% if form.pasta_biblioteca.errors %}
+                            <div class="error">{{ form.pasta_biblioteca.errors }}</div>
+                        {% endif %}
+                        <a href="{% url 'adicionar_pasta_biblioteca' %}" class="btn-mais">+</a>
+
+                        <label for="tipo_gasto">Imobilizado ou Despesa</label>
+                        {{ form.tipo_gasto }}
+
+                        <label for="centro_custo">✱ Centro de Custo</label>
+                        {{ form.centro_custo }}
+                        {% if form.centro_custo.errors %}
+                            <div class="error">{{ form.centro_custo.errors }}</div>
+                        {% endif %}
+
+                        <label for="flag_rateio">Rateio? ​</label>
+                        {{ form.flag_rateio }}
+
+                        <label for="observacao_rateio">✱ Observação do Rateio</label>
+                        {{ form.observacao_rateio }}
+                        {% if form.observacao_rateio.errors %}
+                            <div class="error">{{ form.observacao_rateio.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba de Valores -->
+            <div class="tab-content" id="valores">
+                <div class="form-section">
+                    <div class="left-section">
+                        <label for="forma_pagamento">✱ Forma de Pgto.</label>
+                        {{ form.forma_pagamento }}
+                        {% if form.forma_pagamento.errors %}
+                            <div class="error">{{ form.forma_pagamento.errors }}</div>
+                        {% endif %}
+
+                        <label for="valor">✱ Valor</label>
+                        <div class="valor-container">
+                            {{ form.valor }}
+                            <button type="button" id="calcButton" class="calc-button">📟</button>
+                        </div>
+                        {% if form.valor.errors %}
+                            <div class="error">{{ form.valor.errors }}</div>
+                        {% endif %}
+                        
+                        <!-- Modal de Calculadora -->
+                        <div id="calcModal" class="modal">
+                            <div class="modal-content">
+                                <h2>Calculadora</h2>
+                                <div id="calcDisplay" class="calc-display">0</div>
+                                <div class="calc-buttons">
+                                    <button class="calc-btn" data-value="1">1</button>
+                                    <button class="calc-btn" data-value="2">2</button>
+                                    <button class="calc-btn" data-value="3">3</button>
+                                    <button class="calc-btn" data-value="+">+</button>
+                                    <button class="calc-btn" data-value="4">4</button>
+                                    <button class="calc-btn" data-value="5">5</button>
+                                    <button class="calc-btn" data-value="6">6</button>
+                                    <button class="calc-btn" data-value="-">-</button>
+                                    <button class="calc-btn" data-value="7">7</button>
+                                    <button class="calc-btn" data-value="8">8</button>
+                                    <button class="calc-btn" data-value="9">9</button>
+                                    <button class="calc-btn" data-value="*">×</button>
+                                    <button class="calc-btn" data-value="0">0</button>
+                                    <button class="calc-btn" data-value=".">.</button>
+                                    <button class="calc-btn" data-value="=">=</button>
+                                    <button class="calc-btn" data-value="/">÷</button>
+                                    <button class="calc-clear" id="calcClear">C</button>
+                                </div>
+                                <button id="calcClose" class="btn-cancel2">Fechar</button>
+                            </div>
+                        </div>    
+
+                        <label for="observacao_valor">Observação sobre valor</label>
+                        {{ form.observacao_valor }}
+                        {% if form.observacao_valor.errors %}
+                            <div class="error">{{ form.observacao_valor.errors }}</div>
+                        {% endif %}
+
+                        <label for="observacao_pagamento">Condição de Pagamento</label>
+                        {{ form.observacao_pagamento }}
+                        {% if form.observacao_pagamento.errors %}
+                            <div class="error">{{ form.observacao_pagamento.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="right-section">
+                        <label for="indice_reajuste">✱ Índice de reajuste</label>
+                        {{ form.indice_reajuste }}
+                        {% if form.indice_reajuste.errors %}
+                            <div class="error">{{ form.indice_reajuste.errors }}</div>
+                        {% endif %}
+
+                        <label for="observacao_reajuste">Condições sobre reajuste</label>
+                        {{ form.observacao_reajuste }}
+                        {% if form.observacao_reajuste.errors %}
+                            <div class="error">{{ form.observacao_reajuste.errors }}</div>
+                        {% endif %}
+
+                        <label for="data_reajuste">✱ Mês de Ajuste</label>
+                        <input type="date" name="data_reajuste" id="data_reajuste" value="{{ form.data_reajuste.value|date:'Y-m-d' }}">
+                        {% if form.data_reajuste.errors %}
+                            <div class="error">{{ form.data_reajuste.errors }}</div>
+                        {% endif %}
+
+                        <label for="visibilidade_privada">Flag de Restrito?</label>
+                        {{ form.visibilidade_privada }}
+                        <label>⚠️ Atenção! Ao marcar essa opção, apenas o responsável pelo contrato e o administrador do portal poderão ver o contrato, ficando oculto para buscas para os demais usuários.</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba de Anexos -->
+            <div class="tab-content" id="anexos">
+                <h2>Anexos</h2>
+                <table class="anexos-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Anexo</th>
+                            <th>Arquivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Anexar Contrato</td>
+                            <td>
+                                {{ form.contrato_file }}
+                                {% if form.contrato_file.errors %}
+                                    <span class="error">{{ form.contrato_file.errors }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Anexar Imagem</td>
+                            <td>
+                                {{ form.imagem }}
+                                {% if form.imagem.errors %}
+                                    <span class="error">{{ form.imagem.errors }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Aba de Distrato -->
+            <div class="tab-content" id="distrato">
+                <label for="observacao_distrato">Informações sobre Distrato</label>
+                {{ form.observacao_distrato }}
+                {% if form.observacao_distrato.errors %}
+                    <div class="error">{{ form.observacao_distrato.errors }}</div>
+                {% endif %}
+
+                    <h2>Anexos</h2>
+                    <table class="anexos-table">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Anexo</th>
+                                <th>Arquivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Anexar Distrato</td>
+                                <td>
+                                    {{ form.anexo_distrato }}
+                                    {% if form.anexo_distrato.errors %}
+                                        <span class="error">{{ form.anexo_distrato.errors }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="button-container">
+                <button type="submit" class="btn-save">Salvar Contrato</button>
+                <a href="{% url 'listar_contratos' %}" class="btn-cancel">Cancelar</a>
+            </div>
+
+            {% if form.errors %}
+                <strong>Erro ao salvar contrato:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Modal de Confirmação -->
+            <div id="confirmationModal" class="modal">
+                <div class="modal-content">
+                    <h2>Confirmar Salvamento</h2>
+                    <p>Tem certeza de que deseja salvar as alterações feitas no contrato?</p>
+                    <div class="modal-buttons">
+                        <button id="confirmSave" class="btn-confirm">Sim</button>
+                        <a href="{% url 'listar_contratos' %}" class="btn-cancel">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="{% static 'js/tabs.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const calcButton = document.getElementById("calcButton");
+        const calcModal = document.getElementById("calcModal");
+        const calcClose = document.getElementById("calcClose");
+        const calcDisplay = document.getElementById("calcDisplay");
+        const calcClear = document.getElementById("calcClear");
+        const valorField = document.querySelector("input[name='valor']");
+        let calcValue = "";
+    
+        calcButton.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            calcModal.style.display = "flex";
+            calcDisplay.textContent = calcValue || "0";
+        });
+    
+        calcClose.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            calcModal.style.display = "none";
+        });
+    
+        document.querySelectorAll(".calc-btn").forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                event.preventDefault(); 
+                const value = this.getAttribute("data-value");
+    
+                if (value === "=") {
+                    try {
+                        calcValue = eval(calcValue).toString();
+                        calcDisplay.textContent = calcValue;
+                        valorField.value = calcValue;
+                    } catch {
+                        calcDisplay.textContent = "Erro";
+                    }
+                } else {
+                    calcValue += value;
+                    calcDisplay.textContent = calcValue;
+                }
+            });
+        });
+    
+        calcClear.addEventListener("click", function (event) {
+            event.preventDefault(); 
+            calcValue = "";
+            calcDisplay.textContent = "0";
+        });
+    
+        window.onclick = function(event) {
+            if (event.target === calcModal) {
+                calcModal.style.display = "none";
+            }
+        };
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const saveButton = document.querySelector(".btn-save");
+        const confirmationModal = document.getElementById("confirmationModal");
+        const confirmSave = document.getElementById("confirmSave");
+        const cancelSave = document.getElementById("cancelSave");
+        const form = document.querySelector("form");
+    
+        saveButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            confirmationModal.style.display = "flex";
+        });
+    
+        confirmSave.addEventListener("click", function () {
+            confirmationModal.style.display = "none";
+            form.submit();
+        });
+    
+        cancelSave.addEventListener("click", function () {
+            confirmationModal.style.display = "none";
+        });
+    });
+    
+    
+    $(document).ready(function() {
+
+        // Lógica para desativar e limpar o campo centro_custo quando o id_flag_rateios estiver marcado
+        $('#id_flag_rateio').change(function() {
+            if ($(this).is(':checked')) {
+                $('#id_centro_custo').prop('disabled', true).addClass('input-disabled').val(''); 
+            } else {
+                $('#id_centro_custo').prop('disabled', false).removeClass('input-disabled'); 
+            }
+        }).change();
+
+        // Lógica para desativar e limpar o campo observacao_rateio quando o id_flag_rateio estiver marcado
+        $('#id_flag_rateio').change(function() {
+            if (!$(this).is(':checked')) {
+                $('#id_observacao_rateio').prop('disabled', true).addClass('input-disabled').val(''); 
+            } else {
+                $('#id_observacao_rateio').prop('disabled', false).removeClass('input-disabled'); 
+            }
+        }).change(); 
+    
+        // Lógica existente para carregar o campo c_contabil baseado na categoria selecionada
+        $('#id_categoria').change(function() {
+            var categoriaId = $(this).val();
+            if (categoriaId) {
+                $.ajax({
+                    url: '{% url "get_c_contabil" %}',
+                    data: {
+                        'categoria_id': categoriaId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#id_c_contabil').val(data.c_contabil);
+                    }
+                });
+            } else {
+                $('#id_c_contabil').val('');
+            }
+        // Pré-visualização da imagem
+        $('#id_imagem').change(function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                $('#imagePreview').attr('src', e.target.result).show();
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                $('#imagePreview').hide();
+            }
+        });
+    });
+    
+    });
+
+    // Visualização de arquivo
+    function previewFile(filePath) {
+        if (filePath) {
+            window.open(filePath, '_blank');
+        } else {
+            alert('Arquivo não encontrado.');
+        }
+    }
+
+    // Função de busca de fornecedor por CNPJ
+    $('#id_cnpj_fornecedor').on('blur', function() {
+        let cnpj = $(this).val();
+        if (cnpj) {
+            $.ajax({
+                url: "{% url 'buscar_fornecedor' %}",
+                data: { 'cnpj': cnpj },
+                success: function(data) {
+                    if (data.nome) {
+                        $('#id_nome_fornecedor').val(data.id);
+                        $('#id_nome_fornecedor_text').val(data.nome);
+                    } else {
+                        alert('Fornecedor não encontrado.');
+                    }
+                }
+            });
+        }
+    });
+        
+    // Função de busca de fornecedor por Nome
+    $('#id_nome_fornecedor_text').on('blur', function() {
+        let nome = $(this).val();
+            if (nome) {
+            $.ajax({
+                url: "{% url 'buscar_fornecedor_nome' %}",
+                data: { 'nome': nome },
+                success: function(data) {
+                    if (data.cnpj) {
+                        $('#id_nome_fornecedor').val(data.id); 
+                        $('#id_cnpj_fornecedor').val(data.cnpj);
+                    } 
+                    else {
+                        alert('Fornecedor não encontrado.');
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

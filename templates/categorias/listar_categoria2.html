@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Categorias</title>
+    <link rel="stylesheet" href="{% static 'css/listar_categorias.css' %}">
+</head>
+<body class="listar-categorias-container">
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <h1>Categorias</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Contra Relacionada</th>
+            <th>Ações</th>
+        </tr>
+        {% for categoria in categorias %}
+        <tr>
+            <td>{{ categoria.id }}</td>
+            <td>{{ categoria.nome }}</td>
+            <td>{{ categoria.c_contabil }}</td>
+            <td>
+                <a href="{% url 'editar_categoria' categoria.id %}">✎</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>Nenhuma Categoria encontrada.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <footer class="listar-categorias-footer">
+        <a href="{% url 'adicionar_categoria' %}">Adiciona nova Categorias </a>
+    </footer>
+    
+</body>
+</html>
+
+{% endblock %}

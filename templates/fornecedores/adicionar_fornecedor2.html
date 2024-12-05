@@ -1,0 +1,69 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/adicionar_fornecedor.css' %}">
+
+<div class="adicionar-fornecedor">
+    <header>
+        <h1>Adicionar Novo Fornecedor</h1>
+    </header>
+
+    <main>
+        <form id="fornecedorForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <!-- Botão para abrir o modal -->
+            <button class="save-btn" type="button" onclick="confirmarSalvar()">Salvar Fornecedor</button>
+        </form>
+
+        {% if form.errors %}
+            <div class="error">
+                <strong>Erro ao salvar fornecedor:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <a href="{% url 'listar_fornecedores' %}">⤶</a>
+    </footer>
+</div>
+
+<!-- Modal de Confirmação -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <p>Tem certeza de que deseja salvar este fornecedor?</p>
+        <button onclick="document.getElementById('fornecedorForm').submit()">Confirmar</button>
+        <button onclick="fecharModal()">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    function confirmarSalvar() {
+        document.getElementById('confirmModal').style.display = 'block';
+    }
+
+    function fecharModal() {
+        document.getElementById('confirmModal').style.display = 'none';
+    }
+</script>
+{% endblock %}

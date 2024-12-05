@@ -1,0 +1,110 @@
+{% block content %}
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Contratos js</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    .custom-blue {
+      background-color: #2c3e50;
+    }
+    .custom-blue:hover {
+      background-color: #34495e;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+  <div class="container mx-auto px-6 md:flex md:items-center flex-1">
+    <!-- Texto principal -->
+    <div class="md:w-1/2 space-y-6">
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+        Armazene.<br>Compartilhe.<br>Colabore.
+      </h1>
+      <p class="text-gray-600 text-lg">
+        <strong>Gestão de Contratos</strong> oferece uma maneira 
+        <span class="text-gray-800 font-semibold">simples</span>, 
+        <span class="text-gray-800 font-semibold">rápida</span> e 
+        <span class="text-gray-800 font-semibold">segura</span> de compartilhar seus contratos.
+      </p>
+      <!-- Botões -->
+      <div class="flex items-center space-x-4">
+        {% if user.is_authenticated %}
+
+        {% else %}
+        <a href="{% url 'login' %}" class="custom-blue hover:custom-blue-hover text-white px-6 py-3 rounded-lg text-lg">
+          Faça Login
+        </a>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <a href="{% url 'listar_contratos' %}" class="custom-blue hover:custom-blue-hover text-white px-6 py-3 rounded-lg text-lg">
+            Visualizar Contratos
+          </a>
+        {% endif %}
+        <div class="flex space-x-3 text-xl text-gray-600">
+          <i class="fab fa-linux"></i>
+          <i class="fab fa-windows"></i>
+          <i class="fab fa-apple"></i>
+        </div>
+      </div>
+      <!-- Destaques -->
+      <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 mt-8">
+        <div class="flex items-center space-x-3">
+          <div class="custom-blue p-2 rounded-full text-white">
+            <i class="fas fa-lock"></i>
+          </div>
+          <span class="text-gray-800">Segurança em primeiro lugar</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="custom-blue p-2 rounded-full text-white">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <span class="text-gray-800">Flexibilidade e agilidade</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="custom-blue p-2 rounded-full text-white">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <span class="text-gray-800">Muita performance</span>
+        </div>
+      </div>
+    </div>
+    <!-- Imagem do JS -->
+    <div class="md:w-1/2 flex justify-center mt-12 md:mt-0">
+        <img src="{% static 'images/logo_js_s.png' %}" alt="Lua">
+    </div>
+  </div>
+
+  <!-- Seção de Desenvolvedores (Agora abaixo do conteúdo principal) -->
+  <div class="bg-gray-900 text-white py-16 mt-16">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-6">Equipe de Desenvolvedores</h2>
+      <p class="text-lg mb-4">
+        A equipe por trás do <strong>Gestão de Contratos</strong> é composta por desenvolvedores apaixonados por tecnologia.
+        Estamos sempre buscando aprimorar a plataforma e torná-la mais eficiente para nossos usuários.
+      </p>
+      <div class="flex justify-center space-x-8">
+        <!-- Desenvolvedor 1 -->
+        <div class="flex flex-col items-center">
+          <img src="{% static 'images/desenvolvedor.jpeg' %}" alt="Desenvolvedor 1" class="w-24 h-24 rounded-full mb-4">
+          <h3 class="text-xl font-medium">Victor Teixeira</h3>
+          <p class="text-gray-400">Fullstack Developer</p>
+          <a href="https://github.com/victorgteixeira" class="text-blue-500 hover:underline">GitHub</a>
+        </div>
+        <!-- Desenvolvedor 2 -->
+        <div class="flex flex-col items-center">
+          <img src="{% static 'images/lucas_navi.png' %}" alt="Desenvolvedor 2" class="w-24 h-24 rounded-full mb-4">
+          <h3 class="text-xl font-medium">Lucas Nave</h3>
+          <p class="text-gray-400">Idealizador/Controler</p>
+          <a href="https://github.com/dev2" class="text-blue-500 hover:underline">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adicione os ícones do Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
+{% endblock %}

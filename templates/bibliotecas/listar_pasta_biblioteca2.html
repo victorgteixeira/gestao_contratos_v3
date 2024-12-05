@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Pastas</title>
+    <link rel="stylesheet" href="{% static 'css/listar_pasta_biblioteca.css' %}">
+</head>
+<body>
+    <h1> Pastas da Biblioteca </h1>
+    
+    <form method="get" action="{% url 'listar_pasta_biblioteca' %}">
+        <input type="text" name="search" placeholder="Buscar por nome da pasta..." value="{{ request.GET.search }}" class="search-input">
+        <button type="submit" class="filter-button">⌕</button>
+
+        {% if request.GET.search %}
+            <a href="{% url 'listar_pasta_biblioteca' %}" class="cancel-button">✖</a>
+        {% endif %}
+    </form>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="listar-pastas-container">
+        <div class="pastas-container">
+            {% for pasta in pastas %}
+                <div class="pasta-item">
+                    <div class="pasta-item-icon">
+                        {% if pasta.contrato_set.count > 0 %}
+                            🗂️ <!-- Pasta com arquivos -->
+                        {% else %}
+                            📁 <!-- Pasta vazia -->
+                        {% endif %}
+                    </div>
+                    <div class="pasta-item-name">{{ pasta.nome }}</div>
+                    <a href="{% url 'editar_pasta_biblioteca' pasta.id %}">Editar</a>
+                    <a href="{% url 'visualizar_contratos_da_pasta' pasta.id %}" class="view-button">Visualizar</a>
+                </div>
+            {% empty %}
+                <p>Nenhuma Biblioteca encontrada.</p>
+            {% endfor %}
+        </div>        
+        <a href="{% url 'adicionar_pasta_biblioteca' %}" class="add-pasta-link">Adicionar Nova Pasta</a>
+    </div>
+</body>
+</html>
+{% endblock %}

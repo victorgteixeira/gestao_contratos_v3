@@ -1,0 +1,88 @@
+/* Estilos para o corpo da página */
+body.adicionar-categoria {
+    font-family: Arial, sans-serif; /* Fonte padrão */
+    margin: 20px; /* Margem na página */
+    background-color: #f5f5f5; /* Cor de fundo clara */
+    color: #333; /* Cor do texto */
+}
+
+/* Estilos para o cabeçalho */
+header.adicionar-categoria-header {
+    margin-bottom: 20px; /* Espaço abaixo do cabeçalho */
+}
+
+/* Estilos para o título da página */
+h1.adicionar-categoria-title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color:#2c3e50; /* Cor do título */
+    font-size: 24px; /* Tamanho do título */
+}
+
+/* Estilos para o conteúdo principal */
+main.adicionar-categoria-main {
+    display: flex; /* Flexbox para centralizar a div */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Estilos para o formulário */
+form.adicionar-categoria-form {
+    background-color: white; /* Cor de fundo do formulário */
+    padding: 20px; /* Espaçamento interno do formulário */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    width: 400px; /* Largura fixa da div */
+    max-width: 100%; /* Responsivo */
+}
+
+/* Estilos para o botão do formulário */
+form.adicionar-categoria-form button[type="submit"] {
+    text-align: center;
+    display: block; /* Ocupa toda a largura da div pai */
+    width: 100%; /* Garante que o botão ocupe 100% da largura */
+    margin-top: 20px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efeito hover para o botão */
+form.adicionar-categoria-form button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+
+/* Estilos para o footer */
+footer.adicionar-categoria-footer {
+    margin-top: 20px; /* Espaço acima do footer */
+}
+
+/* Estilos para links no footer */
+footer.adicionar-categoria-footer a {
+    text-align: center;
+    display: grid;
+    margin-top: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    background-color: #2c3e50;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Efeito hover para o link do footer */
+footer.adicionar-categoria-footer a:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+

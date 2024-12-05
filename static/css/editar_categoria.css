@@ -1,0 +1,97 @@
+/* Estilos para o corpo da página */
+body.editar-categoria {
+    font-family: Arial, sans-serif; /* Fonte padrão */
+    margin: 20px; /* Margem na página */
+    background-color: #f5f5f5; /* Cor de fundo clara */
+    color: #333; /* Cor do texto */
+}
+
+/* Estilos para o cabeçalho */
+header.editar-categoria-header {
+    margin-bottom: 20px; /* Espaço abaixo do cabeçalho */
+}
+
+/* Estilos para o título da página */
+h1.editar-categoria-title {
+    color: #2c3e50; /* Cor do título */
+    font-size: 24px; /* Tamanho do título */
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+/* Estilos para o conteúdo principal */
+main.editar-categoria-main {
+    display: flex; /* Flexbox para centralizar a div */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Estilos para o formulário */
+form.editar-categoria-form {
+    background-color: white; /* Cor de fundo do formulário */
+    padding: 20px; /* Espaçamento interno do formulário */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    width: 400px; /* Largura fixa da div */
+    max-width: 100%; /* Responsivo */
+}
+
+/* Estilos para o botão do formulário */
+form.editar-categoria-form button {
+    text-align: center;
+    display: block; /* Ocupa toda a largura da div pai */
+    width: 100%; /* Garante que o botão ocupe 100% da largura */
+    margin-top: 20px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efeito hover para o botão */
+form.editar-categoria-form button:hover {
+    background-color: white;
+    color: #2c3e50; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilos para mensagens de erro */
+.error.editar-categoria-error {
+    background-color: #ffcccc; /* Fundo vermelho claro para erros */
+    border: 1px solid #ff0000; /* Borda vermelha */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    margin-top: 20px; /* Espaço acima da mensagem de erro */
+}
+
+/* Estilos para o footer */
+footer.editar-categoria-footer {
+    margin-top: 20px; /* Espaço acima do footer */
+}
+
+/* Estilos para links no footer */
+footer.editar-categoria-footer a {
+    text-align: center;
+    display: block; /* Ocupa toda a largura da div pai */
+    width: 100%; /* Garante que o botão ocupe 100% da largura */
+    margin-top: 20px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efeito hover para o link do footer */
+footer.editar-categoria-footer a:hover {
+    background-color: white;
+    color: #2c3e50;
+}

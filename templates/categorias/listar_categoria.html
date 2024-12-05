@@ -1,0 +1,75 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  {% load static %}
+  <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Listar Categorias</title>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+      <div class="container mx-auto px-4 py-8">
+        <!-- Exibição de mensagens -->
+        {% if messages %}
+          <div class="max-w-3xl mx-auto my-6 px-4">
+            <ul class="space-y-4">
+              {% for message in messages %}
+                <li class="p-4 rounded-md text-white {% if message.tags %}
+                    bg-{{ message.tags }}-500
+                  {% else %}
+                    bg-blue-500
+                  {% endif %} shadow-md">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <!-- Título -->
+        <div class="text-center mb-8 mt-6">
+          <h1 class="text-2xl font-bold text-center mb-6 text-sky-900">
+            Categorias
+            <span class="animate-pulse text-blue-600"><i class="fas fa-file-alt"></i></span>
+          </h1>
+          <p class="text-md text-gray-600 mt-2">Aqui estão todas as categorias cadastradas no sistema.</p>
+        </div>
+
+        <!-- Tabela de Categorias -->
+        <main class="overflow-x-auto bg-white shadow-md rounded-lg">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-left table-auto">
+              <thead class="bg-sky-600 text-gray-100">
+                <tr>
+                  <th class="py-3 px-6 text-sm font-medium">ID</th>
+                  <th class="py-3 px-6 text-sm font-medium">Nome</th>
+                  <th class="py-3 px-6 text-sm font-medium">Conta Relacionada</th>
+                  <th class="py-3 px-6 text-sm font-medium">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for categoria in categorias %}
+                  <tr class="border-b hover:bg-gray-50">
+                    <td class="py-3 px-6 text-sm text-gray-700">{{ categoria.id }}</td>
+                    <td class="py-3 px-6 text-sm text-gray-700">{{ categoria.nome }}</td>
+                    <td class="py-3 px-6 text-sm text-gray-700">{{ categoria.c_contabil }}</td>
+                    <td class="py-3 px-6 text-sm">
+                      <a href="{% url 'editar_categoria' categoria.id %}" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200">✎ Editar</a>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="4" class="text-center py-3 px-6 text-sm text-gray-500">Nenhuma Categoria encontrada.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </main>
+
+        <!-- Footer com link para adicionar nova categoria -->
+        <footer class="text-center mt-8 px-4">
+          <a href="{% url 'adicionar_categoria' %}" class="bg-sky-500 text-white py-3 px-8 rounded-full text-lg hover:bg-sky-900 transition duration-300 shadow-md">Adicionar nova Categoria</a>
+        </footer>
+      </div>
+    </body>
+  </html>
+{% endblock %}

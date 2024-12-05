@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Pasta</title>
+    <link rel="stylesheet" href="{% static 'css/adicionar_pasta_biblioteca.css' %}">
+</head>
+<body class="pasta-biblioteca-container">
+    <header class="pasta-biblioteca-header">
+        <h1>Adicionar Nova Pasta</h1>
+    </header>
+    <form method="post" class="pasta-biblioteca-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'listar_pasta_biblioteca' %}" class="pasta-biblioteca-back-link">Voltar para a lista de pastas</a>
+</body>
+</html>
+{% endblock %}

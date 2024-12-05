@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Contratos da Pasta: {{ pasta.nome }}</title>
+    <link rel="stylesheet" href="{% static 'css/visualizar_contratos_pasta.css' %}">
+    <script src="{% static 'js/visualizar_contratos_pasta.js' %}" defer></script>
+</head>
+<body class="visualizar-contratos">
+    <h1>Contratos da Pasta: {{ pasta.nome }}</h1>
+
+    <div class="contratos-container">
+        <div class="contratos-header" onclick="toggleContratos()">
+            <span>
+                <span class="icon">🗂️</span>
+                <strong>Contratos:</strong>
+            </span>
+            <span id="toggle-icon">▼</span>
+        </div>
+        <div class="contratos-list" id="contratos-list">
+            {% if contratos %}
+                {% for contrato in contratos %}
+                <div class="contrato-item">
+                    <p><strong>Fornecedor:</strong> {{ contrato.nome_fornecedor }}</p>
+                    <p><strong>Observação:</strong> {{ contrato.observacao_contrato }}</p>
+                    <a href="{% url 'visualizar_contrato' contrato.id %}" class="btn-ver-detalhes">Ver Detalhes</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>
+                    <span class="icon">📁</span>
+                    Não há contratos associados a esta pasta.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="{% url 'listar_pasta_biblioteca' %}" class="btn-voltar">Voltar para as Pastas</a> 
+</body>
+</html>
+{% endblock %}

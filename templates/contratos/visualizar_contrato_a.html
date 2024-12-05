@@ -1,0 +1,121 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+
+<main class="container mx-auto px-4 py-8">
+    <header class="py-4">
+        <h1 class="text-2xl font-bold">Detalhes do Contrato</h1>
+    </header>
+    <div class="tab-container mt-6">
+        <div class="tab-content active mt-6" id="dados-basicos">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="left-section space-y-4">
+                    <p><strong>Fornecedor:</strong> {{ contrato.nome_fornecedor }}</p>                   
+                    <p><strong>Responsável:</strong> {{ contrato.responsavel }}</p>
+                    <p><strong>Categoria:</strong> {{ contrato.categoria }}</p>
+                    <p><strong>Conta Relacionada:</strong> {{ contrato.c_contabil }}</p>
+                    <p><strong>Observação Contrato:</strong> {{ contrato.observacao_contrato }}</p>
+                </div>
+                
+                <div class="right-section space-y-4">
+                    <p><strong>Área Beneficiada:</strong> {{ contrato.area_beneficiada }}</p>
+                    <p><strong>Vigência:</strong> {{ contrato.data_inicio }} até {{ contrato.data_fim }}</p>
+                    <p><strong>Pasta da Biblioteca:</strong> {{ contrato.pasta_biblioteca }}</p>
+                    <p><strong>Imobilizado ou Despesa:</strong> {{ contrato.tipo_gasto }}</p>
+                    <p><strong>Centro de Custo:</strong> {{ contrato.centro_custo }}</p>
+                    <p><strong>Observação do Rateio:</strong> {{ contrato.observacao_rateio }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content mt-6" id="valores">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="left-section space-y-4">
+                    <p><strong>Valor do Contrato:</strong> {{ contrato.valor }}</p>
+                    <p><strong>Forma de Pagamento:</strong> {{ contrato.forma_pagamento }}</p>
+                    <p><strong>Índice de Reajuste:</strong> {{ contrato.indice_reajuste }}</p>
+                    <p><strong>Data de Reajuste:</strong> {{ contrato.data_reajuste }}</p>
+                </div>
+        
+                <div class="right-section space-y-4">
+                    <p><strong>Condições sobre Reajuste:</strong> {{ contrato.condicoes_reajuste }}</p>
+                    <p><strong>Mês de Ajuste:</strong> {{ contrato.mes_ajuste }}</p>
+                    <p><strong>Flag de Restrito:</strong> {{ contrato.flag_restrito }}</p>
+                    <p><strong>Observação de Valor:</strong> {{ contrato.observacao_valor }}</p>
+                    <p><strong>Observação de Pagamento:</strong> {{ contrato.observacao_pagamento }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content mt-6" id="anexos">
+            <h2 class="text-xl font-semibold mb-4">Anexos</h2>
+            <table class="min-w-full table-auto border-collapse">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 border-b">Tipo de Anexo</th>
+                        <th class="px-4 py-2 border-b">Arquivo</th>
+                        <th class="px-4 py-2 border-b">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Contrato anexado</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.contrato_file.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.contrato_file %}
+                                <a href="{{ contrato.contrato_file.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Imagem anexada</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.imagem.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.imagem %}
+                                <a href="{{ contrato.imagem.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-content mt-6" id="distrato">
+            <h2 class="text-xl font-semibold mb-4">Distratos</h2>
+            <p>{{ contrato.observacao_distrato }}</p>
+            <table class="min-w-full table-auto border-collapse mt-4">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 border-b">Tipo de Anexo</th>
+                        <th class="px-4 py-2 border-b">Arquivo</th>
+                        <th class="px-4 py-2 border-b">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 border-b">Distrato anexado</td>
+                        <td class="px-4 py-2 border-b">{{ contrato.anexo_distrato.name }}</td>
+                        <td class="px-4 py-2 border-b">
+                            {% if contrato.anexo_distrato %}
+                                <a href="{{ contrato.anexo_distrato.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <footer class="mt-6 flex justify-between">
+        <a href="{% url 'listar_contratos' %}" class="bg-gray-200 text-gray-700 py-2 px-4 rounded">Voltar para a lista de contratos</a>
+        <a href="{% url 'editar_contrato' contrato.id %}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Editar Contrato</a>
+    </footer>
+</main>
+
+<script src="{% static 'js/tabs.js' %}"></script>
+{% endblock %}

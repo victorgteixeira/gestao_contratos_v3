@@ -1,0 +1,127 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+{% load monetario %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Gerenciador de Contratos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/listar_contratos.css' %}"> 
+    <script type="text/javascript">
+        function confirmarEncerramento(referencia_contrato) {
+            return confirm('Você realmente deseja encerrar o contrato ' + referencia_contrato + '?');
+        }
+    </script>
+</head>
+<body>
+    <h1>Contratos
+        <div class="icone-animado">
+            <i class="fas fa-file-alt"></i>
+        </div>
+    </h1>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+        <div class="search-container">
+            <form method="get" action="{% url 'listar_contratos' %}">
+                <input class="serach-input" type="text" name="busca" placeholder="Buscar por Referencia, Fornecedor, CNPJ ou Usuário" value="{{ request.GET.busca }}">
+                <button type="submit">⌕</button>
+                <button class="add-button" type="submit" name="minhas_requisicoes" value="true">Meus contratos</button>
+                
+                <select class="status-filter-select" name="status" onchange="this.form.submit()">
+                    <option value="">Status</option>
+                    <option class="status-filter-select" value="ativo" {% if request.GET.status == 'ativo' %}selected{% endif %}>Ativo</option>
+                    <option class="status-filter-select" value="inativo" {% if request.GET.status == 'inativo' %}selected{% endif %}>Inativo</option>
+                </select>
+                
+                {% if request.GET.busca or request.GET.minhas_requisicoes == 'true' or request.GET.status %}
+                    <a href="{% url 'listar_contratos' %}" class="encerrar-button">×</a>
+                {% endif %}
+            </form>
+        </div>
+        
+
+        <div class="button-container">
+            <a href="{% url 'adicionar_contrato' %}" class="add-button">Adicionar Novo Contrato</a>
+        </div>        
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="table-header">Referência</th>
+                        <th class="table-header">Nome do Fornecedor</th>
+                        <th class="table-header">Categoria</th>
+                        <th class="table-header">Responsável</th>
+                        <th class="table-header">Código Contábil</th>
+                        <th class="table-header">Valor</th>
+                        <th class="table-header">Área Beneficiada</th>
+                        <th class="table-header">Data de Criação</th>
+                        <th class="table-header">Status</th>
+                        <th class="table-header">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contrato in page_obj  %}
+                        <tr>
+                            <td class="table-data">{{ contrato.referencia_contrato }}</td>
+                            <td class="table-data">{{ contrato.nome_fornecedor }}</td>
+                            <td class="table-data">{{ contrato.categoria }}</td>
+                            <td class="table-data">{{ contrato.responsavel }}</td>
+                            <td class="table-data">{{ contrato.c_contabil }}</td>
+                            <td class="table-data">{{ contrato.valor|moeda }}</td>
+                            <td class="table-data">{{ contrato.area_beneficiada }}</td>
+                            <td class="table-data">{{ contrato.data_criacao }}</td>
+                            <td class="table-data {% if contrato.status == 'ativo' %}status-ativo{% elif contrato.status == 'encerrado' %}status-encerrado{% endif %}">
+                                {{ contrato.status|title }}
+                            </td>
+                            <td class="table-data">
+                                <div class="action-buttons">
+                                    <a href="{% url 'visualizar_contrato' contrato.id %}" class="button">⌕</a>
+                                    <a href="{% url 'editar_contrato' contrato.id %}" class="button">✎</a>
+                                    <a href="{% url 'encerrar_contrato' contrato.id %}" 
+                                       class="button encerrar-button"
+                                       onclick="return confirmarEncerramento('{{ contrato.referencia_contrato }}');">✖</a>
+        
+                                       <a href="{% url 'historico_contrato' contrato.id %}">⟳</a> 
+                                </div>
+                            </td>                            
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="12">Nenhum contrato cadastrado.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Links de Paginação -->
+        <div class="pagination">
+            <span class="page-link">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Primeira</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Anterior</a>
+                {% endif %}
+
+                    <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Próxima</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Última</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

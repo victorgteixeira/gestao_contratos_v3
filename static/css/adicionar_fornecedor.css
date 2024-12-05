@@ -1,0 +1,256 @@
+/* Escopo principal para a página de adicionar fornecedor */
+.adicionar-fornecedor body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.adicionar-fornecedor header {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.adicionar-fornecedor header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Main */
+.adicionar-fornecedor main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+/* Formulário */
+.adicionar-fornecedor form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.adicionar-fornecedor form label {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.adicionar-fornecedor form input[type="text"],
+.adicionar-fornecedor form input[type="email"],
+.adicionar-fornecedor form input[type="number"],
+.adicionar-fornecedor form select,
+.adicionar-fornecedor form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Botão Salvar */
+.adicionar-fornecedor button[type="submit"] {
+    background-color: #2c3e50; /* Azul */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 1rem; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de ponteiro */
+    transition: background-color 0.3s; /* Transição suave para hover */
+    margin-top: 20px; /* Espaçamento acima */
+    margin-bottom: 10px; /* Espaçamento abaixo */
+    text-align: center; /* Alinhamento ao centro */
+    display: block; /* Ocupa toda a largura */
+    margin-left: auto; /* Centraliza à direita */
+    margin-right: auto; /* Centraliza à esquerda */
+}
+
+.adicionar-fornecedor button[type="submit"]:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+/* Mensagens de erro */
+.adicionar-fornecedor .error {
+    margin-top: 20px;
+    background-color: #fee;
+    color: #c00;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #f99;
+}
+
+.adicionar-fornecedor .error strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.adicionar-fornecedor .error ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+/* Link de voltar */
+.adicionar-fornecedor footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.adicionar-fornecedor footer a {
+    background-color: #2c3e50;
+    color: white; /* Cor azul */
+    text-decoration: none; /* Sem sublinhado */
+    font-weight: bold; /* Negrito */
+    margin-right: 558px;
+}
+
+.adicionar-fornecedor footer a:hover {
+    background-color: white;
+    color: #2c3e50;
+    text-decoration: none; /* Sublinhado no hover */
+}
+
+/* Mensagens de sucesso */
+.adicionar-fornecedor .success {
+    margin-top: 20px;
+    background-color: #e0ffe0; /* Verde claro */
+    color: #2c5c2e; /* Verde escuro */
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #a0dca0; /* Verde mais claro */
+}
+
+/* Estilo para o texto de destaque nas mensagens de sucesso */
+.adicionar-fornecedor .success strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Estilo para listas dentro de mensagens de sucesso */
+.adicionar-fornecedor .success ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+/* Mensagens de erro */
+.adicionar-fornecedor .error {
+    margin-top: 20px;
+    background-color: #fee; /* Vermelho claro */
+    color: #c00; /* Vermelho escuro */
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #f99; /* Vermelho mais claro */
+}
+
+.adicionar-fornecedor .error strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.adicionar-fornecedor .error ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+/* Mensagens de informação */
+.adicionar-fornecedor .info {
+    margin-top: 20px;
+    background-color: #e6f7ff; /* Azul claro */
+    color: #004080; /* Azul escuro */
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #b3d7ff; /* Azul mais claro */
+}
+
+.adicionar-fornecedor .info strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.adicionar-fornecedor .info ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+/* Estilo do modal */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.modal-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal-content button:first-child {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.modal-content button:last-child {
+    background-color: #c00;
+    color: #fff;
+}
+
+.save-btn {
+    display: inline-block;
+    width: 30%;
+    margin-top: 0px;
+    margin-left: 187px;
+    background-color: #17ce2b;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+}
+
+.save-btn:hover {
+    background-color: white;
+    color: #17ce2b;
+}
+

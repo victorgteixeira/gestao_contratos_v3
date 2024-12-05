@@ -1,0 +1,91 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Fornecedores</title>
+    <link rel="stylesheet" href="{% static 'css/fornecedores.css' %}">
+</head>
+<body class="fornecedor-body">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <header class="fornecedor-header">
+        <h1 class="fornecedor-title">Lista de Fornecedores</h1>
+        <a class="fornecedor-add-button" href="{% url 'adicionar_fornecedor' %}">+ Novo Fornecedor</a>
+    </header>
+
+    <!-- Formulário de Filtro -->
+    <form method="GET" action="{% url 'listar_fornecedores' %}" class="fornecedor-search-form">
+        <input type="text" name="query" placeholder="Buscar por Nome ou CNPJ" value="{{ query }}" class="lista-forn-input">
+        <button type="submit" class="lista-fornecedores-button">⌕</button>
+    </form>
+
+    <!-- Botão de Ordenação -->
+    <div>
+        {% if order == 'asc' %}
+            <a class="ordem-a" href="?order=desc&query={{ query }}" class="order-link">￬ Ordenar Descendente</a>
+        {% else %}
+            <a class="ordem-a" href="?order=asc&query={{ query }}" class="order-link">⬆ Ordenar Crescente</a>
+        {% endif %}
+    </div>
+
+    <main class="fornecedor-main">
+        <table class="fornecedor-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CNPJ</th>
+                    <th>CPF</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fornecedor in page_obj %}
+                    <tr>
+                        <td>{{ fornecedor.nome }}</td>
+                        <td>{{ fornecedor.cnpj }}</td>
+                        <td>{{ fornecedor.cpf }}</td>
+                        <td>{{ fornecedor.endereco }}</td>
+                        <td>
+                            <a class="fornecedor-edit-button" href="{% url 'editar_fornecedor' fornecedor.id %}">✎</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="fornecedor-empty">Nenhum fornecedor encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <!-- Navegação de página -->
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&query={{ query }}&order={{ order }}">&laquo; Primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}&order={{ order }}">Anterior</a>
+            {% endif %}
+
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&query={{ query }}&order={{ order }}">Próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&query={{ query }}&order={{ order }}">Última &raquo;</a>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer class="fornecedor-footer">
+        <a class="fornecedor-back-button" href="{% url 'listar_contratos' %}">Voltar para a página inicial</a>
+    </footer>
+</body>
+</html>
+{% endblock %}

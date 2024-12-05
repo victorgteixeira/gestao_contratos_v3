@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Portal de Gestão
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/newbase.css' %}">
+
+    {% load static %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Roboto', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-sky-800 via-sky-900 to-sky-800 text-white p-4 flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="{% static 'images/logo_js_s.png' %}" alt="Logo" class="h-10 mr-4" />
+        <h1 class="text-xl font-bold">Gestão de Contratos</h1>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="flex items-center space-x-4">
+        <!-- Foto do Usuário -->
+        <img src="{% if user.profile.photo %}
+            {{ user.profile.photo.url }}
+          {% else %}
+            {% static 'images/default_user.png' %}
+          {% endif %}"
+          alt="User Photo"
+          class="h-10 w-10 rounded-full cursor-pointer"
+          onclick="toggleModal()" />
+      
+        <!-- Nome do Usuário -->
+        <span class="hidden sm:block">{{ user.username }}</span>
+
+        <!-- Notificação -->
+        <div class="relative">
+          <button id="notificationButton" class="text-sky-600 hover:text-sky-400 focus:outline-none">
+            <i class="fas fa-bell text-xl"></i>
+            <span id="notificationCount" class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full w-3 h-3 flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Popup de notificação -->
+          <div id="notificationPopup" class="hidden absolute right-0 mt-2 w-64 p-4 bg-white border rounded-lg shadow-lg z-50">
+            <div id="notificationContent" class="text-sm text-gray-800">Nenhuma notificação</div>
+          </div>
+        </div>
+
+        <!-- Configurações -->
+        <div class="relative">
+          <button id="settingsButton" class="text-gray-100 hover:text-gray-300 focus:outline-none"><i class="fas fa-cog text-xl"></i></button>
+
+          <!-- Menu de configurações -->
+          <div id="settingsMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+            <ul class="text-sm text-gray-800">
+              <li>
+                <form method="POST" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="flex items-center w-full text-left px-4 py-2 hover:bg-gray-100">
+                    <i class="fas fa-sign-out-alt text-gray-600 mr-2"></i> Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </header>
+    
+    <!-- Navigation Menu -->
+    {% if user.is_authenticated %}
+    <nav class="bg-sky-100 text-sky-600">
+      <div class="container mx-auto">
+        <button class="block md:hidden p-4 text-gray-400 hover:text-white focus:outline-none" id="menuToggle">☰</button>
+        <ul class="hidden md:flex space-x-3 p-3" id="menu">
+          <li>
+            <a href="{% url 'home' %}" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-home"></i> Início</a>
+          </li>
+          <li class="group relative">
+            <a href="#" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-chart-pie"></i> Dashboards</a>
+            <ul class="absolute left-0 bg-sky-200 hidden group-hover:block rounded-md">
+              <li>
+                <a href="{% url 'top_contratos_view' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Maiores Gastos</a>
+              </li>
+            </ul>
+          </li>
+          <li class="group relative">
+            <a href="#" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fas fa-building"></i> Contratos</a>
+            <ul class="absolute left-0 bg-sky-200 hidden group-hover:block rounded-md">
+              <li>
+                <a href="{% url 'listar_contratos' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Listar Contratos</a>
+              </li>
+              <li>
+                <a href="{% url 'adicionar_contrato' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Adicionar Contrato</a>
+              </li>
+            </ul>
+          </li>
+          <li class="group relative">
+            <a href="#" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-book"></i> Bibliotecas</a>
+            <ul class="absolute left-0 bg-sky-200 hidden group-hover:block rounded-md">
+              <li>
+                <a href="{% url 'listar_pasta_biblioteca' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Listar Biblioteca</a>
+              </li>
+              <li>
+                <a href="{% url 'adicionar_pasta_biblioteca' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Adicionar Biblioteca</a>
+              </li>
+            </ul>
+          </li>
+          <li class="group relative">
+            <a href="#" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-business-time"></i> Categorias</a>
+            <ul class="absolute left-0 bg-sky-200 hidden group-hover:block rounded-md">
+              <li>
+                <a href="{% url 'listar_categoria' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Listar Categorias</a>
+              </li>
+              <li>
+                <a href="{% url 'adicionar_categoria' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Cadastro Categoria</a>
+              </li>
+            </ul>
+          </li>
+          <li class="group relative">
+            <a href="#" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-users"></i> Fornecedor</a>
+            <ul class="absolute left-0 bg-sky-200 hidden group-hover:block rounded-md">
+              <li>
+                <a href="{% url 'listar_fornecedores' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Listar Fornecedor</a>
+              </li>
+              <li>
+                <a href="{% url 'adicionar_fornecedor' %}" class="block px-4 py-2 hover:bg-sky-300 rounded-md">Adicionar Fornecedor</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="{% url 'upload_file' %}" class="hover:text-sky-400 px-4 py-2 rounded-md"><i class="fas fa-upload"></i> Uploads</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endif %}
+    <div class="flex flex-col min-h-screen bg-[radial-gradient(circle,_#f8fafc,_#f0f9ff)]">
+      <!-- Conteúdo principal -->
+      <main class="flex-grow">
+        {% block content %}
+
+        {% endblock %}
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-gradient-to-r from-sky-800 via-sky-900 to-sky-800 text-white p-2 flex items-center justify-between text-center py-2">
+        <div class="flex items-center justify-center space-x-3 text-sm text-gray-100">
+          <p>© 2024 Gestão de Contratos. Todos os direitos reservados.</p>
+        </div>
+        <div class="flex items-center space-x-3 text-xl text-gray-100">
+          <i class="fab fa-linux"></i>
+          <i class="fab fa-windows"></i>
+          <i class="fab fa-apple"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-facebook"></i>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Script to toggle menu visibility -->
+    <script>
+      document.getElementById('menuToggle').addEventListener('click', () => {
+        const menu = document.getElementById('menu')
+        menu.classList.toggle('hidden')
+      })
+    </script>
+  </body>
+</html>
+<!-- Modal de Configuração do Usuário -->
+<div id="userConfigModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-xl w-96 overflow-hidden relative">
+    <div class="p-6 border-b">
+      <h2 class="text-xl font-semibold text-gray-800">Configurações do Usuário</h2>
+      <!-- Botão de Fechar -->
+      <button onclick="toggleModal()" class="absolute top-4 right-4 text-gray-600 hover:text-red-600 transition duration-300 rounded-full p-2 hover:bg-gray-200"><i class="fas fa-times text-2xl"></i></button>
+    </div>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'config_usuario' %}" class="p-4 space-y-4">
+      {% csrf_token %}
+      <!-- Primeiro Nome -->
+      <div>
+        <label for="first_name" class="block font-medium text-gray-700">Primeiro Nome</label>
+        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+      </div>
+      <!-- Segundo Nome -->
+      <div>
+        <label for="last_name" class="block font-medium text-gray-700">Segundo Nome</label>
+        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+      </div>
+      <!-- Email -->
+      <div>
+        <label for="email" class="block font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Alterar foto</label>
+      </div>
+      <!-- Foto -->
+      <div class="relative flex justify-left items-left">
+        <!-- Foto do Usuário -->
+        <img src="{% if user.profile.photo %}
+            {{ user.profile.photo.url }}
+          {% else %}
+            {% static 'images/default_user.png' %}
+          {% endif %}"
+          alt="User Photo"
+          class="h-16 w-16 rounded-full border-2 border-gray-300 cursor-pointer" />
+        <input type="file" id="photo" name="photo" accept="image/*" class="absolute bottom-0 right-0 opacity-0 cursor-pointer" />
+      </div>
+      <!-- Senha -->
+      <div>
+        <label for="password" class="block font-medium text-gray-700">Nova Senha</label>
+        <input type="password" id="password" name="password" class="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2 px-4 transition-all" />
+      </div>
+      <!-- Botão de Enviar -->
+      <div class="text-right">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300">Salvar Alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function toggleModal() {
+    const modal = document.getElementById('userConfigModal')
+    modal.classList.toggle('hidden')
+    modal.classList.toggle('flex')
+  }
+</script>
+<script>
+  document.getElementById('settingsButton').addEventListener('click', function () {
+    const settingsMenu = document.getElementById('settingsMenu');
+    settingsMenu.classList.toggle('hidden');
+  });
+  
+  // Função para atualizar a notificação
+  function updateNotification(content) {
+    const notificationCount = document.getElementById('notificationCount');
+    const notificationPopup = document.getElementById('notificationPopup');
+    const notificationContent = document.getElementById('notificationContent');
+    
+    let currentCount = parseInt(notificationCount.textContent);
+    notificationCount.textContent = currentCount + 1; // Incrementa o contador de notificações
+    
+    notificationContent.textContent = content; // Define o conteúdo da notificação
+    notificationPopup.classList.remove('hidden'); // Mostra o popup
+  }
+
+  // Se houver a variável `contrato_adicionado`, dispara a notificação
+  {% if contrato_adicionado %}
+    updateNotification('Contrato #{{ contrato_adicionado.id }} foi adicionado!');
+  {% endif %}
+
+  // Função para esconder o popup quando o mouse sai
+  document.getElementById('notificationButton').addEventListener('mouseover', () => {
+    document.getElementById('notificationPopup').classList.remove('hidden');
+  });
+
+  document.getElementById('notificationButton').addEventListener('mouseout', () => {
+    document.getElementById('notificationPopup').classList.add('hidden');
+  });
+</script>
+

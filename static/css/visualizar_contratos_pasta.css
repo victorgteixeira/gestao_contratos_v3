@@ -1,0 +1,134 @@
+/* Estilos gerais do corpo */
+body.visualizar-contratos {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Cor de fundo suave */
+    color: #333; /* Cor do texto */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Título da página */
+.visualizar-contratos h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Cor do título */
+}
+
+/* Estilos para a lista de contratos */
+.visualizar-contratos ul {
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding: 0; /* Remove o padding padrão */
+}
+
+/* Estilos para cada item da lista */
+.visualizar-contratos li {
+    background-color: #fff; /* Fundo branco para os itens */
+    border: 1px solid #ddd; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 15px; /* Espaçamento interno */
+    margin-bottom: 10px; /* Espaçamento entre os itens */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+/* Estilo do ícone */
+.visualizar-contratos .icon {
+    font-size: 24px; /* Tamanho do ícone */
+    vertical-align: middle; /* Alinha o ícone com o texto */
+    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+}
+
+/* Estilos para links */
+.visualizar-contratos a {
+    color: #2c3e50; /* Cor do link */
+    text-decoration: none; /* Remove o sublinhado */
+    margin-top: 30px !important;
+}
+
+.visualizar-contratos a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+/* Estilo do botão de voltar */
+.visualizar-contratos a.btn-voltar {
+    display: inline-block; /* Faz com que o link se comporte como um botão */
+    margin-top: 20px; /* Espaçamento acima do botão */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    background-color: #2c3e50; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Efeito de transição suave */
+}
+
+.visualizar-contratos a.btn-voltar:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+/* Estilos para a página de visualizar contratos da pasta */
+
+.contratos-container {
+    margin-top: 20px;
+    border: 1px solid #ddd; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px;
+    background-color: #f9f9f9; /* Cor de fundo suave */
+}
+
+.contratos-header {
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding: 10px;
+    background-color: #2c3e50; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto */
+    border-radius: 5px; /* Bordas arredondadas */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contratos-list {
+    display: none; /* Oculta a lista por padrão */
+    padding: 10px; /* Espaçamento interno */
+}
+
+.icon {
+    font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
+    vertical-align: middle; /* Alinha o ícone com o texto */
+    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+}
+
+/* Estilos para o botão "Ver Detalhes" */
+.btn-ver-detalhes {
+    display: inline-block; /* Para permitir margens e padding */
+    padding: 8px 12px; /* Espaçamento interno */
+    background-color: #2c3e50; /* Cor de fundo verde */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s; /* Transição suave */
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+
+.btn-ver-detalhes:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+/* Estilos para o botão "Voltar" */
+.btn-voltar {
+    display: inline-block; /* Para permitir margens e padding */
+    padding: 8px 12px; /* Espaçamento interno */
+    background-color: #2c3e50; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove o sublinhado */
+    transition: background-color 0.3s; /* Transição suave */
+    margin-top: 10px;
+}
+
+.btn-voltar:hover {
+    background-color: white;
+    color: #2c3e50;
+}

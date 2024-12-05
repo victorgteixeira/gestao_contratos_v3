@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+{% load custom_filters %}
+{% block content %}
+<h1 class="text-3xl font-bold text-center text-sky-900 mb-6 mt-5">Upload de Arquivo Excel - Fornecedores</h1>
+
+<main class="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-8">
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        
+        <div class="space-y-4">
+            <!-- Campos do Formulário -->
+            <div class="grid grid-cols-1 gap-6">
+                {% for field in form %}
+                    <div class="flex flex-col space-y-4">
+                        <label for="{{ field.id_for_label }}" class="text-gray-700 font-medium mb-2">{{ field.label_tag }}</label>
+                        {{ field|add_class:"border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 focus:outline-none p-3 text-gray-900 bg-white" }}
+                        {% if field.errors %}
+                            <span class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Botão Enviar -->
+        <button type="submit" class="w-full bg-sky-500 text-white px-6 py-2 rounded-md hover:bg-sky-900 transition duration-300">
+            Enviar
+        </button>
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" name="titulo"><br>
+
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" name="descricao"></textarea><br>
+
+    <button type="submit">Salvar</button>
+</form>

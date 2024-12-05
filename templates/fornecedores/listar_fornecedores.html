@@ -1,0 +1,117 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Fornecedores</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <div class="container mx-auto px-4 py-8">
+    <!-- Exibição de mensagens -->
+    {% if messages %}
+        <div class="max-w-3xl mx-auto my-6 px-4">
+            <ul class="space-y-4">
+                {% for message in messages %}
+                    <li class="p-4 rounded-md text-white {% if message.tags %}bg-{{ message.tags }}-500{% else %}bg-blue-500{% endif %}">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Cabeçalho -->
+        <!-- Título -->
+        <div class="text-center mb-8 mt-6">
+            <h1 class="text-2xl font-bold text-center mb-6 text-sky-900">
+              Listagem de fornecedores
+              <span class="animate-pulse text-blue-600"><i class="fas fa-users"></i></span>
+            </h1>
+            <p class="text-md text-gray-600 mt-2">Aqui estão todos os fornecedores cadastrados no sistema.</p>
+          </div>
+
+    <!-- Formulário de Filtro -->
+    <div class="max-w-3xl mx-auto mt-8 px-4">
+        <form method="GET" action="{% url 'listar_fornecedores' %}" class="flex items-center space-x-4">
+            <input type="text" name="query" placeholder="Buscar por Nome ou CNPJ" value="{{ query }}" class="flex-grow py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">⌕</button>
+        </form>
+    </div>
+
+    <!-- Botão de Ordenação -->
+    <div class="max-w-3xl mx-auto mt-4 text-center">
+        {% if order == 'asc' %}
+            <a href="?order=desc&query={{ query }}" class="text-blue-600 hover:text-blue-800">￬ Ordenar Descendente</a>
+        {% else %}
+            <a href="?order=asc&query={{ query }}" class="text-blue-600 hover:text-blue-800">⬆ Ordenar Crescente</a>
+        {% endif %}
+    </div>
+
+    <div class="mt-4 text-right mb-3">
+        <a href="{% url 'adicionar_fornecedor' %}" class="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition duration-300">+ Novo Fornecedor</a>
+    </div>
+
+    <!-- Tabela de Fornecedores -->
+    <main class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full table-auto">
+            <thead class="bg-sky-600 text-gray-100">
+                <tr>
+                    <th class="py-3 px-4 text-left text-sm font-semibold ">Nome</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold ">CNPJ</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold ">CPF</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold ">Endereço</th>
+                    <th class="py-3 px-4 text-left text-sm font-semibold ">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fornecedor in page_obj %}
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ fornecedor.nome }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ fornecedor.cnpj }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ fornecedor.cpf }}</td>
+                        <td class="py-3 px-4 text-sm text-gray-700">{{ fornecedor.endereco }}</td>
+                        <td class="py-3 px-4 text-sm text-blue-500">
+                            <a href="{% url 'editar_fornecedor' fornecedor.id %}" class="hover:underline">✎ Editar</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-3 px-4 text-sm text-gray-500">Nenhum fornecedor encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Navegação de página -->
+        <div class="mt-6 flex justify-between items-center">
+            <div class="text-sm ">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </div>
+
+            <div class="space-x-4">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&query={{ query }}&order={{ order }}" class="text-blue-600 hover:text-blue-800">« Primeira</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&query={{ query }}&order={{ order }}" class="text-blue-600 hover:text-blue-800">Anterior</a>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&query={{ query }}&order={{ order }}" class="text-blue-600 hover:text-blue-800">Próxima</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&query={{ query }}&order={{ order }}" class="text-blue-600 hover:text-blue-800">Última »</a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-200 p-4 text-center">
+        <a href="{% url 'listar_contratos' %}" class="text-blue-600 hover:text-blue-800">Voltar para a página inicial</a>
+    </footer>
+</div>
+
+</body>
+</html>
+{% endblock %}

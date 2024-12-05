@@ -1,0 +1,41 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Gerenciador de Contratos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/historico_contrato.css' %}"> 
+</head>
+<h2>Histórico do Contrato: {{ contrato.referencia_contrato }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Ação</th>
+            <th>Campos Alterados</th>
+            <th>Usuário</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alteracao in alteracoes %}
+        <tr>
+            <td>{{ alteracao.data|date:"d/m/Y H:i" }}</td>
+            <td>{{ alteracao.acao }}</td>
+            <td>{{ alteracao.campos_alterados }}</td>
+            <td>{{ alteracao.usuario.username }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhuma alteração registrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'listar_contratos' %}">⤶</a>
+{% endblock %}

@@ -1,0 +1,212 @@
+/* Estilos gerais do corpo */
+body {
+    margin: 0; /* Remove a margem padrão do corpo */
+    padding: 0 !important;  /* Remove o padding padrão do corpo */
+    overflow-x: hidden; /* Remove a barra de rolagem horizontal */
+    font-family: 'Roboto', sans-serif; /* Definindo a fonte para o corpo */
+    background-color: #f4f4f4; /* Cor de fundo suave para o corpo */
+    color: #333; /* Cor do texto */
+}
+
+/* Layout do conteúdo da página */
+.content {
+    margin-top: 60px; 
+    padding: 40px; 
+    transition: margin-left 0.3s; 
+    width: calc(100% - 60px); 
+    box-sizing: border-box; 
+}
+
+
+/* Estilo do cabeçalho */
+.header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 5px 30px; 
+    background-image: url('/static/images/fundo.png'); 
+    background-size: cover; 
+    background-position: center; 
+    color: #2c3e50; 
+    position: fixed; 
+    width: calc(100% - 0px); 
+    top: 0; 
+    z-index: 1000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.footer {
+    background-color: white; 
+    color: rgb(72, 72, 72); 
+    text-align: center; 
+    padding: 10px 0; 
+    position: relative; /* Mude para relative ou absolute */
+    bottom: 0; /* Alinhado na parte inferior do conteúdo */
+    left: 0; 
+    width: 100%; /* Largura total do rodapé */
+    height: 100%; /* altura rodapé */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Sombra para cima */
+    border-top: 1px solid #ccc; /* Borda superior leve */
+    margin-top: 20px; /* Espaçamento acima do rodapé */
+    margin-bottom: 20px; /* Espaçamento abaixo do rodapé */
+    font-size: 12px; /* Tamanho da fonte do rodapé */
+    font-weight: bold; /* Texto em negrito */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+
+/* Estilo do título do cabeçalho */
+.header-title {
+    margin-top: 10px;
+    margin-left: 140px; /* Espaço entre a logo e o título */
+    font-size: 20px; /* Aumentar o tamanho da fonte do título */
+    font-weight: bold; /* Negrito */
+}
+
+/* Estilo para a logo */
+.logo-img {
+    height: 50px; /* Altura da logo */
+}
+
+/* Estilo para informações do usuário */
+.user-info {
+    display: flex; /* Usar flexbox para alinhamento */
+    align-items: center; /* Centralizar verticalmente */
+}
+
+/* Nome do usuário */
+.username {
+    margin-right: 10px; /* Espaço entre o nome do usuário e o botão */
+    color: white; /* Cor do texto do nome do usuário */
+    font-weight: bold; /* Texto em negrito */
+}
+
+/* Estilo do botão de logout */
+.logout-button {
+    background-color: #e74c3c; /* Cor do botão de logout */
+    color: white; /* Cor do texto */
+    padding: 10px 15px; /* Ajustar padding do botão */
+    border: none; /* Remove bordas */
+    border-radius: 4px; /* Cantos arredondados */
+    cursor: pointer; /* Muda o cursor para pointer */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 14px; /* Tamanho da fonte */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+/* Cor de fundo ao passar o mouse */
+.logout-button:hover {
+    background-color: #c0392b; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilo do menu lateral */
+.menu-container {
+    width: 60px;
+    height: 100vh;
+    position: fixed;
+    background-color: #2c3e50;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 500;
+}
+
+/* Estilos do menu expandido */
+.menu-container.expanded {
+    width: 200px; /* Largura do menu expandido */
+}
+
+/* Estilos para os links do menu */
+.menu ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.menu ul li {
+    position: relative; /* Para o submenu ser posicionado corretamente */
+}
+
+/* Estilo do link do menu */
+.menu ul li a {
+    text-decoration: none; /* Remove sublinhado dos links */
+    color: white; /* Cor do texto */
+    display: block; /* Faz o link ocupar toda a área do item */
+    padding: 15px 10px; /* Adiciona padding */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+/* Cor de fundo ao passar o mouse */
+.menu ul li a:hover {
+    background-color: #34495e; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo do título do menu */
+.menu-title {
+    text-align: center; /* Centraliza o texto */
+    font-weight: bold; /* Texto em negrito */
+    padding: 20px 0; /* Padding para o título */
+}
+
+/* Submenu inicial oculto */
+.submenu {
+    display: none; /* Esconde o submenu por padrão */
+    list-style-type: none; /* Remove marcadores */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    background-color: #34495e; /* Cor de fundo do submenu */
+}
+
+/* Submenu inicial oculto */
+.submenu:hover {
+    display: block; /* Exibe o submenu ao passar o mouse */
+    background-color: #34495e; /* Cor de fundo ao passar o mouse */
+}
+
+/* Mostrar submenu ao passar o mouse sobre o título do menu */
+.menu-title:hover .submenu {
+    display: block; /* Exibe o submenu ao passar o mouse */
+    background-color: #34495e; /* Cor de fundo ao passar o mouse */
+}
+
+/* Ajustar o conteúdo da página ao expandir o menu 
+.menu-container:hover ~ .content {
+    margin-left: 200px; /* Margem esquerda ajustada ao expandir o menu 
+}
+*/
+.menu {
+    display: none; /* Esconder o menu inicialmente */
+}
+/* Mostrar o menu quando expandido */
+.menu-container.expanded .menu {
+    display: block; /* Mostrar o menu */
+}
+
+.menu-toggle {
+    display: block; /* Torna o botão visível */
+    background-color: #2c3e50; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de ponteiro */
+    font-size: 20px; /* Tamanho da fonte */
+    width: 60px; /* Largura do botão */
+}
+
+.menu-toggle:hover {
+    background-color: #3b536b;
+    color: white;
+}
+
+.menu-a {
+    background-color: #2c3e50;
+    color: white;
+}
+
+
+.menu-a:hover {
+    background-color: #2c3e50;
+    color: white;
+}
+
+

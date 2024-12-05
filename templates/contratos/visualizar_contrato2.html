@@ -1,0 +1,130 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<header>
+    <h1>Detalhes do Contrato</h1>
+</header>
+
+<main>
+    <div class="tab-container">
+        <ul class="tabs">
+            <li class="tab active" data-tab="dados-basicos">Dados Básicos</li>
+            <li class="tab" data-tab="valores">Valores</li>
+            <li class="tab" data-tab="anexos">Anexos</li>
+            <li class="tab" data-tab="distrato">Distrato</li>
+        </ul>
+
+        <div class="tab-content active" id="dados-basicos">
+            <div class="form-section">
+                <div class="left-section">
+                    <p><strong>Fornecedor:</strong> {{ contrato.nome_fornecedor }}</p>                   
+                    <p><strong>Responsável:</strong> {{ contrato.responsavel }}</p>
+                    <p><strong>Categoria:</strong> {{ contrato.categoria }}</p>
+                    <p><strong>Conta Relacionada:</strong> {{ contrato.c_contabil }}</p>
+                    <p><strong>Observação Contrato:</strong> {{ contrato.observacao_contrato }}</p>
+                </div>
+                
+                <div class="right-section">
+                    <p><strong>Área Beneficiada:</strong> {{ contrato.area_beneficiada }}</p>
+                    <p><strong>Vigência:</strong> {{ contrato.data_inicio }} até {{ contrato.data_fim }}</p>
+                    <p><strong>Pasta da Biblioteca:</strong> {{ contrato.pasta_biblioteca }}</p>
+                    <p><strong>Imobilizado ou Despesa:</strong> {{ contrato.tipo_gasto }}</p>
+                    <p><strong>Centro de Custo:</strong> {{ contrato.centro_custo }}</p>
+                    <p><strong>Observação do Rateio:</strong> {{ contrato.observacao_rateio }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="valores">
+            <div class="form-section">
+                <div class="left-section">
+                    <p><strong>Valor do Contrato:</strong> {{ contrato.valor }}</p>
+                    <p><strong>Forma de Pagamento:</strong> {{ contrato.forma_pagamento }}</p>
+                    <p><strong>Índice de Reajuste:</strong> {{ contrato.indice_reajuste }}</p>
+                    <p><strong>Data de Reajuste:</strong> {{ contrato.data_reajuste }}</p>
+                </div>
+        
+                <div class="right-section">
+                    <p><strong>Condições sobre Reajuste:</strong> {{ contrato.condicoes_reajuste }}</p>
+                    <p><strong>Mês de Ajuste:</strong> {{ contrato.mes_ajuste }}</p>
+                    <p><strong>Flag de Restrito:</strong> {{ contrato.flag_restrito }}</p>
+                    <p><strong>Observação de Valor:</strong> {{ contrato.observacao_valor }}</p>
+                    <p><strong>Observação de Pagamento:</strong> {{ contrato.observacao_pagamento }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba de Anexos -->
+        <!-- Aba de Anexos -->
+        <div class="tab-content" id="anexos">
+            <h2>Anexos</h2>
+            <table class="anexos-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Anexo</th>
+                        <th>Arquivo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Contrato anexado</td>
+                        <td>{{ contrato.contrato_file.name }}</td>
+                        <td>
+                            {% if contrato.contrato_file %}
+                                <a href="{{ contrato.contrato_file.url }}" target="_blank" class="view-button">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Imagem anexada</td>
+                        <td>{{ contrato.imagem.name }}</td>
+                        <td>
+                            {% if contrato.imagem %}
+                                <a href="{{ contrato.imagem.url }}" target="_blank" class="view-button">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Aba de Distrato -->
+        <div class="tab-content" id="distrato">
+            <h2>Distratos</h2>
+            <p>{{ contrato.observacao_distrato }}</p>
+            <table class="anexos-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Anexo</th>
+                        <th>Arquivo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Distrato anexado</td>
+                        <td>{{ contrato.anexo_distrato.name }}</td>
+                        <td>
+                            {% if contrato.anexo_distrato %}
+                                <a href="{{ contrato.anexo_distrato.url }}" target="_blank" class="view-button">Visualizar</a>
+                            {% else %}
+                                <p>Sem anexo</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <footer>
+        <a href="{% url 'listar_contratos' %}" class="back-button">Voltar para a lista de contratos</a>
+        <a href="{% url 'editar_contrato' contrato.id %}" class="edit-button">Editar Contrato</a>
+    </footer>
+</body>
+<script src="{% static 'js/tabs.js' %}"></script>
+{% endblock %}

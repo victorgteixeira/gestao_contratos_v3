@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portal de Gestão{% endblock %}</title>
+    
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contrato.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listar_contratos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/visualizar_contrato.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listar_pasta_biblioteca.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editar_fornecedor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editar_pasta_biblioteca.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="{% static 'js/base.js' %}" defer></script>
+</head>
+<body class="body-layout">
+    <header class="header">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-img">
+        <h1 class="header-title">Gestão de Contratos</h1>
+        <div class="user-info">
+            <span class="username">{{ user.username }}</span>
+            {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>            
+            {% else %}
+                <a href="{% url 'login' %}" class="logout-button">Login</a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <nav class="menu-container" id="menuContainer">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="menu" id="menu">
+            <ul>
+                <ul>
+                    <a class="a-home" href="{% url 'home' %}">🏠︎</a>
+                </ul>
+
+                <li class="menu-title"><a class="menu-a" href="#">・ Dashboards</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'top_contratos_view' %}">Maiores Gastos</a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-title"><a class="menu-a" href="#">・ Contratos</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_contratos' %}">Listar Contratos</a></li>
+                        <li><a href="{% url 'adicionar_contrato' %}">Adicionar Contrato</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Bibliotecas</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_pasta_biblioteca' %}">Listar Biblioteca</a></li>
+                        <li><a href="{% url 'adicionar_pasta_biblioteca' %}">Adicionar Biblioteca</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Categorias</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_categoria' %}">Listar Categorias</a></li>
+                        <li><a href="{% url 'adicionar_categoria' %}">Cadastro Categoria</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Fornecedor</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'listar_fornecedores' %}">Listar Fornecedor</a></li>
+                        <li><a href="{% url 'adicionar_fornecedor' %}">Adicionar Fornecedor</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><a class="menu-a" href="#">・ Uploads</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'upload_file' %}">Upload Fornecedores</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content">
+        {% block content %}
+        <!-- Conteúdo dinâmico será carregado aqui -->
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        © 2024 Gestão de Contratos. Todos os direitos reservados.
+    </footer>
+</body>
+</html>

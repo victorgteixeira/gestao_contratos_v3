@@ -1,0 +1,122 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  </head>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-sky-900 mb-8">Dashboard de Contratos - Maiores Gastos</h1>
+
+    <div class="animate-pulse mb-6 text-center">
+      <i class="fas fa-chart-pie text-4xl text-sky-500"></i>
+    </div>
+
+    <!-- Tabela de Contratos com Ma iores Gastos -->
+    <div class="bg-white p-6 shadow-lg rounded-lg mb-8">
+      <h2 class="text-2xl font-semibold text-sky-900 mb-4">Contratos com Maiores Gastos</h2>
+      <table class="min-w-full table-auto">
+        <thead>
+          <tr class="bg-sky-100 text-gray-600">
+            <th class="px-4 py-2 text-left">Referência</th>
+            <th class="px-4 py-2 text-left">Fornecedor</th>
+            <th class="px-4 py-2 text-left">Valor</th>
+            <th class="px-4 py-2 text-left">Categoria</th>
+            <th class="px-4 py-2 text-left">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contrato in top_contratos %}
+            {% if contrato.referencia_contrato and contrato.valor %}
+              <tr class="border-b">
+                <td class="px-4 py-2">{{ contrato.referencia_contrato }}</td>
+                <td class="px-4 py-2">{{ contrato.nome_fornecedor }}</td>
+                <td class="px-4 py-2">R$ {{ contrato.valor|floatformat:2 }}</td>
+                <td class="px-4 py-2">{{ contrato.categoria }}</td>
+                <td class="px-4 py-2">
+                  <div class="flex space-x-2">
+                    <a href="{% url 'visualizar_contrato' contrato.id %}" class="text-blue-500 hover:text-blue-700">⌕ Visualizar</a>
+                    <a href="{% url 'historico_contrato' contrato.id %}" class="text-yellow-500 hover:text-yellow-700">⟳ Histórico</a>
+                  </div>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gráficos de Gastos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Gráfico de Gastos por Contrato -->
+      <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-sky-900 mb-4">Gráfico de Gastos por Contrato</h2>
+        <canvas id="gastosChart" class="w-full" height="300"></canvas>
+      </div>
+
+      <!-- Distribuição de Gastos por Categoria -->
+      <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-sky-900 mb-4">Distribuição de Gastos por Categoria</h2>
+        <canvas id="gastosColumnChart" class="w-full" height="300"></canvas>
+      </div>
+
+      <!-- Gastos por Categoria -->
+      <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-sky-900 mb-4">Gastos por Categoria</h2>
+        <canvas id="categoriaGastosPieChart" class="w-full" height="300"></canvas>
+      </div>
+
+      <!-- Gastos por Fornecedor -->
+      <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-sky-900 mb-4">Gastos por Fornecedor</h2>
+        <canvas id="fornecedorGastosChart" class="w-full" height="300"></canvas>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = [
+        {% for contrato in top_contratos %}
+            {% if contrato.referencia_contrato %}
+                "{{ contrato.referencia_contrato }}",
+            {% endif %}
+        {% endfor %}
+    ].filter(Boolean);
+
+    const dataValues = [
+        {% for contrato in top_contratos %}
+            {% if contrato.valor %}
+                {{ contrato.valor }},
+            {% endif %}
+        {% endfor %}
+    ].filter(Boolean);
+
+    const categoriaLabels = [
+        {% for item in categoria_gastos %}
+            "{{ item.categoria__nome }}",
+        {% endfor %}
+    ];
+
+    const categoriaValues = [
+        {% for item in categoria_gastos %}
+            {{ item.total_valor }},
+        {% endfor %}
+    ];
+
+    const fornecedorLabels = [
+        {% for item in fornecedor_gastos %}
+            "{{ item.nome_fornecedor__nome }}",
+        {% endfor %}
+    ];
+
+    const fornecedorValues = [
+        {% for item in fornecedor_gastos %}
+            {{ item.total_valor }},
+        {% endfor %}
+    ];
+    </script>
+
+  <script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

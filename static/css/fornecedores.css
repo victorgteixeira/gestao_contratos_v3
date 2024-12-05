@@ -1,0 +1,141 @@
+/* Estilização geral para a tela de fornecedores */
+.fornecedor-body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Cabeçalho */
+.fornecedor-header {
+    background-color: #2c3e50;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fornecedor-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: white;
+}
+
+.fornecedor-add-button {
+    margin-top: 0px;
+    background-color: #17ce2b;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.fornecedor-add-button:hover {
+    background-color: white;
+    color: #17ce2b;
+}
+
+/* Estilização do conteúdo principal */
+.fornecedor-main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.fornecedor-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Estilização das células da tabela */
+.fornecedor-table th, .fornecedor-table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.fornecedor-table thead th {
+    background-color: #2c3e50;
+    color: #fff;
+    font-weight: bold;
+}
+
+.fornecedor-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.fornecedor-table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilização de links e ações */
+.fornecedor-edit-button {   
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.fornecedor-edit-button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.fornecedor-empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* Rodapé */
+.fornecedor-footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    border-top: 1px solid white;
+}
+
+.fornecedor-back-button {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #2c3e50;
+}
+
+.fornecedor-back-button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    background-color: #2c3e50;
+}
+
+.lista-fornecedores-button {
+    margin-top: 5px;
+}
+
+.lista-forn-input {
+    width: 30% !important;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.ordem-a {
+    margin-top: 10px;
+}

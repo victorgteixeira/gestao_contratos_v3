@@ -1,0 +1,320 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  {% load static %}
+  <header>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <h1 class="text-center text-2xl font-semibold text-sky-900 mt-5">Editar Contrato: {{ contrato.referencia_contrato }} - {{ contrato.nome_fornecedor }}</h1>
+  </header>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_contrato.css' %}" />
+  </head>
+  <body>
+    <div class="tab-container max-w-5xl mx-auto mt-6">
+      <ul class="tabs flex space-x-4 border-b">
+        <li class="tab active cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="dados-basicos">Dados Básicos</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="valores">Valores</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="anexos">Anexos</li>
+        <li class="tab cursor-pointer py-2 px-4 text-gray-700 hover:text-blue-500 transition-colors duration-300" data-tab="distrato">Distrato</li>
+      </ul>
+
+      <form method="post" enctype="multipart/form-data" class="space-y-8 mt-4">
+        {% csrf_token %}
+
+        <!-- Aba de Dados Básicos -->
+        <div class="tab-content active" id="dados-basicos">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Seção da esquerda -->
+            <div class="space-y-6">
+              <div>
+                <label for="fornecedor" class="block text-sm font-medium text-gray-700">✱ Fornecedor</label>
+                <div class="relative">
+                  <div class="bg-gray-200 text-gray-500 border border-gray-300 rounded-md p-2">{{ contrato.nome_fornecedor.nome }}</div>
+                </div>
+                <a href="{% url 'adicionar_fornecedor' %}" class="text-blue-500 text-sm mt-2 block">Adicionar Fornecedor</a>
+              </div>
+
+              <div>
+                <label for="responsavel" class="block text-sm font-medium text-gray-700 mt-4">Responsável</label>
+                {{ form.responsavel }}
+                {% if form.responsavel.errors %}
+                  <div class="text-red-500 text-sm">{{ form.responsavel.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mt-4">Status</label>
+                {{ form.status }}
+              </div>
+
+              <div>
+                <label for="categoria" class="block text-sm font-medium text-gray-700 mt-4">✱ Categoria</label>
+                {{ form.categoria }}
+                <a href="{% url 'adicionar_categoria' %}" class="text-blue-500 text-sm mt-2 block">Adicionar Categoria</a>
+                {% if form.categoria.errors %}
+                  <div class="text-red-500 text-sm">{{ form.categoria.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="c_contabil" class="block text-sm font-medium text-gray-700 mt-4">Conta Relacionada</label>
+                <input type="text" name="c_contabil" id="id_c_contabil" value="{{ form.c_contabil.value }}" class="shadow-sm focus:ring-0 focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed" readonly />
+              </div>
+
+              <div>
+                <label for="observacao_contrato" class="block text-sm font-medium text-gray-700 mt-4">Observação Contrato</label>
+                {{ form.observacao_contrato }}
+                {% if form.observacao_contrato.errors %}
+                  <div class="text-red-500 text-sm">{{ form.observacao_contrato.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Seção da direita -->
+            <div class="space-y-6">
+              <div>
+                <label for="area_beneficiada" class="block text-sm font-medium text-gray-700">✱ Área Beneficiada</label>
+                {{ form.area_beneficiada }}
+                {% if form.area_beneficiada.errors %}
+                  <div class="text-red-500 text-sm">{{ form.area_beneficiada.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="data_inicio" class="block text-sm font-medium text-gray-700">✱ Vigência:</label>
+                <input type="date" name="data_inicio" id="data_inicio" value="{{ form.data_inicio.value|date:'Y-m-d' }}" />
+                {% if form.data_inicio.errors %}
+                  <div class="error">{{ form.data_inicio.errors }}</div>
+                {% endif %}
+                <label for="data_fim">até</label>
+                <input type="date" name="data_fim" id="data_fim" value="{{ form.data_fim.value|date:'Y-m-d' }}" />
+                {% if form.data_fim.errors %}
+                  <div class="error">{{ form.data_fim.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="renovacao_automatica" class="block text-sm font-medium text-gray-700 mt-4">Renovação automática (sem data de término)</label>
+                {{ form.renovacao_automatica }}
+              </div>
+
+              <div>
+                <label for="pasta_biblioteca" class="block text-sm font-medium text-gray-700 mt-4">✱ Pasta da Biblioteca</label>
+                {{ form.pasta_biblioteca }}
+                <a href="{% url 'adicionar_pasta_biblioteca' %}" class="text-blue-500 text-sm mt-2 block">Adicionar Pasta</a>
+                {% if form.pasta_biblioteca.errors %}
+                  <div class="text-red-500 text-sm">{{ form.pasta_biblioteca.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="tipo_gasto" class="block text-sm font-medium text-gray-700 mt-4">Imobilizado ou Despesa</label>
+                {{ form.tipo_gasto }}
+              </div>
+
+              <div>
+                <label for="centro_custo" class="block text-sm font-medium text-gray-700 mt-4">✱ Centro de Custo</label>
+                {{ form.centro_custo }}
+                {% if form.centro_custo.errors %}
+                  <div class="text-red-500 text-sm">{{ form.centro_custo.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="flag_rateio" class="block text-sm font-medium text-gray-700 mt-4">Rateio?</label>
+                {{ form.flag_rateio }}
+              </div>
+
+              <div>
+                <label for="observacao_rateio" class="block text-sm font-medium text-gray-700 mt-4">✱ Observação do Rateio</label>
+                {{ form.observacao_rateio }}
+                {% if form.observacao_rateio.errors %}
+                  <div class="text-red-500 text-sm">{{ form.observacao_rateio.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Valores -->
+        <div class="tab-content" id="valores">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="forma_pagamento" class="block text-sm font-medium text-gray-700">✱ Forma de Pagamento</label>
+              {{ form.forma_pagamento }}
+              {% if form.forma_pagamento.errors %}
+                <div class="text-red-500 text-sm">{{ form.forma_pagamento.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div>
+              <label for="valor" class="block text-sm font-medium text-gray-700 mt-4">✱ Valor</label>
+              <div class="flex items-center space-x-2">
+                {{ form.valor }}
+                <button type="button" id="calcButton" class="px-4 py-2 bg-blue-500 text-white rounded-md" onclick="openCalculator()">Calcular</button>
+              </div>
+              {% if form.valor.errors %}
+                <div class="text-red-500 text-sm">{{ form.valor.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div>
+              <label for="observacao_valor" class="block text-sm font-medium text-gray-700 mt-4">Observação valor</label>
+              {{ form.observacao_valor }}
+              {% if form.observacao_valor.errors %}
+                <div class="text-red-500 text-sm">{{ form.observacao_valor.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="observacao_pagamento" class="block text-sm font-medium text-gray-700 mt-4">Condição pagamento</label>
+              {{ form.observacao_pagamento }}
+              {% if form.observacao_pagamento.errors %}
+                <div class="text-red-500 text-sm">{{ form.observacao_pagamento.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="indice_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Índice de reajuste</label>
+              {{ form.indice_reajuste }}
+              {% if form.indice_reajuste.errors %}
+                <div class="text-red-500 text-sm">{{ form.indice_reajuste.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="observacao_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Observação reajuste</label>
+              {{ form.observacao_reajuste }}
+              {% if form.observacao_reajuste.errors %}
+                <div class="text-red-500 text-sm">{{ form.observacao_reajuste.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="data_reajuste" class="block text-sm font-medium text-gray-700 mt-4">Data reajuste</label>
+              <input type="date" name="data_reajuste" id="data_reajuste" value="{{ form.data_reajuste.value|date:'Y-m-d' }}" />
+              {% if form.data_reajuste.errors %}
+                <div class="error">{{ form.data_reajuste.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="visibilidade_privada" class="block text-sm font-medium text-gray-700 mt-4">Flag Restrito</label>
+              {{ form.visibilidade_privada }}
+              <label>⚠️ Atenção! Ao marcar essa opção, apenas o responsável pelo contrato e o administrador do portal poderão ver o contrato, ficando oculto para buscas para os demais usuários.</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Anexos -->
+        <div class="tab-content" id="anexos">
+          <div class="grid grid-cols-1 gap-6">
+            <div>
+              <label for="anexos" class="block text-sm font-medium text-gray-700">Anexar Arquivos</label>
+              {{ form.contrato_file }}
+              {% if form.contrato_file.errors %}
+                <span class="error">{{ form.contrato_file.errors }}</span>
+              {% endif %}
+            </div>
+            <div>
+              <label for="anexos" class="block text-sm font-medium text-gray-700">Anexar Imagens</label>
+              {{ form.imagem }}
+              {% if form.imagem.errors %}
+                <span class="error">{{ form.imagem.errors }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Distrato -->
+        <div class="tab-content" id="distrato">
+          <div class="grid grid-cols-1 gap-6">
+            <div>
+              <label for="motivo_distrato" class="block text-sm font-medium text-gray-700">Motivo do Distrato</label>
+              {{ form.observacao_distrato }}
+              {% if form.observacao_distrato.errors %}
+                <div class="error">{{ form.observacao_distrato.errors }}</div>
+              {% endif %}
+            </div>
+            <div>
+              <label for="anexos" class="block text-sm font-medium text-gray-700">Anexar Disrato</label>
+              {{ form.anexo_distrato }}
+              {% if form.anexo_distrato.errors %}
+                <span class="error">{{ form.anexo_distrato.errors }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-6 py-2 rounded-md mb-4" onclick="window.location.href='{% url 'listar_contratos' %}'">Cancelar</button>
+          <button type="submit" class="bg-sky-500 text-white px-6 py-2 rounded-md mb-4">Salvar</button>
+        </div>
+      </form>
+    </div>
+    <script src="{% static 'js/tabs.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      // Script para alternar abas
+      const tabs = document.querySelectorAll('.tab')
+      const tabContents = document.querySelectorAll('.tab-content')
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('active'))
+          tab.classList.add('active')
+          const tabId = tab.dataset.tab
+      
+          // Mostrar conteúdo correspondente
+          tabContents.forEach((content) => {
+            content.classList.remove('active')
+            if (content.id === tabId) {
+              content.classList.add('active')
+            }
+          })
+        })
+      })
+      
+      // Certifique-se de que a primeira aba e o conteúdo correspondente estão ativos inicialmente
+      document.querySelector('.tab').classList.add('active')
+      document.querySelector('.tab-content').classList.add('active')
+      
+      $(document).ready(function () {
+        // Lógica para desativar e limpar o campo centro_custo quando o id_flag_rateio estiver marcado
+        $('#id_flag_rateio')
+          .change(function () {
+            if ($(this).is(':checked')) {
+              $('#id_centro_custo').prop('disabled', true).addClass('input-disabled').val('')
+            } else {
+              $('#id_centro_custo').prop('disabled', false).removeClass('input-disabled')
+            }
+          })
+          .change()
+      
+        // Lógica para desativar e limpar o campo observacao_rateio quando o id_flag_rateio estiver marcado
+        $('#id_flag_rateio')
+          .change(function () {
+            if (!$(this).is(':checked')) {
+              $('#id_observacao_rateio').prop('disabled', true).addClass('input-disabled').val('')
+            } else {
+              $('#id_observacao_rateio').prop('disabled', false).removeClass('input-disabled')
+            }
+          })
+          .change()
+      
+        // Lógica existente para carregar o campo c_contabil baseado na categoria selecionada
+        $('#id_categoria').change(function () {
+          var categoriaId = $(this).val()
+          if (categoriaId) {
+            $.ajax({
+              url: '{% url "get_c_contabil" %}',
+              data: {
+                categoria_id: categoriaId
+              },
+              dataType: 'json',
+              success: function (data) {
+                $('#id_c_contabil').val(data.c_contabil)
+              }
+            })
+          } else {
+            $('#id_c_contabil').val('')
+          }
+        })
+      })
+    </script>
+  </body>
+{% endblock %}

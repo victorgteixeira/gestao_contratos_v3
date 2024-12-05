@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Categoria</title>
+    <link rel="stylesheet" href="{% static 'css/adicionar_categoria.css' %}">
+</head>
+<body class="adicionar-categoria">
+    <header class="adicionar-categoria-header">
+        <h1 class="adicionar-categoria-title">Adicionar Categoria</h1>
+    </header>
+
+    <main class="adicionar-categoria-main">
+        <form method="post" class="adicionar-categoria-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Salvar</button>
+            <footer class="adicionar-categoria-footer">
+                <a href="{% url 'listar_categoria' %}">Listar Categorias</a>
+            </footer>
+        </form>
+    </main>
+
+    {% if form.errors %}
+    <div class="error">
+        <strong>Erro ao salvar alterações:</strong>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

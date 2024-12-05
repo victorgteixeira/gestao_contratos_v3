@@ -1,0 +1,7 @@
+<!-- mencoes.html -->
+<h1>Contratos onde você foi mencionado</h1>
+<ul>
+    {% for contrato in mencoes %}
+        <li>{{ contrato.nome }} - <a href="{% url 'contrato_detalhes' contrato.id %}">Ver contrato</a></li>
+    {% endfor %}
+</ul>

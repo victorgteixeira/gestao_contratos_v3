@@ -1,0 +1,46 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block content %}
+{% load custom_filters %}
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-3xl font-semibold text-center text-sky-900 mb-6">Portal de Contratos</h2>
+
+      {% if form.errors %}
+        <p class="text-red-500 text-center mb-4">Seu nome de usuário e senha não coincidem. Por favor, tente novamente.</p>
+      {% endif %}
+
+      {% if next %}
+        <p class="text-yellow-500 text-center mb-4">
+          {% if user.is_authenticated %}
+            Sua conta não tem acesso a esta página. Para prosseguir, faça login com uma conta que tenha acesso.
+          {% else %}
+            Por favor, faça login para ver esta página.
+          {% endif %}
+        </p>
+      {% endif %}
+
+      <form method="post" action="{% url 'login' %}" class="space-y-6">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="id_username" class="block text-gray-700 font-medium mb-2">{{ form.username.label }}</label>
+          {{ form.username|add_class:"w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" }}
+        </div>
+
+        <div class="form-group">
+          <label for="id_password" class="block text-gray-700 font-medium mb-2">{{ form.password.label }}</label>
+          {{ form.password|add_class:"w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" }}
+        </div>
+
+        <input type="submit" value="Login" class="w-full py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer" />
+
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+
+      <p class="text-center text-sm mt-4">
+        <a href="{% url 'password_reset' %}" class="text-sky-500 hover:text-sky-700">Esqueceu a senha?</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

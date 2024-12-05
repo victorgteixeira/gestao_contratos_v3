@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Contratos da Pasta: {{ pasta.nome }}</title>
+    <script src="{% static 'js/visualizar_contratos_pasta.js' %}" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Título da página -->
+    <h1 class="text-3xl font-bold text-center my-8">Contratos da Pasta: {{ pasta.nome }}</h1>
+
+    <!-- Container de contratos -->
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-4xl mx-auto">
+        
+        <!-- Cabeçalho da lista de contratos -->
+        <div class="flex justify-between items-center cursor-pointer" onclick="toggleContratos()">
+            <span class="flex items-center space-x-2">
+                <span class="text-xl">🗂️</span>
+                <strong class="text-lg">Contratos:</strong>
+            </span>
+            <span id="toggle-icon" class="text-xl">▼</span>
+        </div>
+
+        <!-- Lista de contratos -->
+        <div class="mt-4 hidden" id="contratos-list">
+            {% if contratos %}
+                {% for contrato in contratos %}
+                <div class="bg-gray-50 p-4 rounded-md shadow-sm mb-4">
+                    <p><strong>Fornecedor:</strong> {{ contrato.nome_fornecedor }}</p>
+                    <p><strong>Observação:</strong> {{ contrato.observacao_contrato }}</p>
+                    <a href="{% url 'visualizar_contrato' contrato.id %}" class="text-blue-500 hover:underline">Ver Detalhes</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="flex items-center space-x-2 text-gray-600">
+                    <span class="text-xl">📁</span>
+                    <span>Não há contratos associados a esta pasta.</span>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botão de Voltar -->
+    <div class="text-center mt-8">
+        <a href="{% url 'listar_pasta_biblioteca' %}" class="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600">Voltar para as Pastas</a>
+    </div>
+    
+</body>
+</html>
+{% endblock %}

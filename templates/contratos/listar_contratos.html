@@ -1,0 +1,176 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load monetario %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Contratos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function confirmarEncerramento(referencia_contrato) {
+            return confirm('Você realmente deseja encerrar o contrato ' + referencia_contrato + '?');
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+   
+    <div class="container mx-auto px-4 py-8">
+        <!-- Título -->
+        <div class="text-center mb-8 mt-6">
+            <h1 class="text-2xl font-bold text-center mb-6 text-sky-900">
+              Contratos
+              <span class="animate-pulse text-blue-600"><i class="fas fa-building"></i></span>
+            </h1>
+            <p class="text-md text-gray-600 mt-2">Aqui estão todos os contratos cadastrados no sistema.</p>
+          </div>
+
+        {% if messages %}
+        <ul class="mb-4">
+            {% for message in messages %}
+            <li class="bg-{{ message.tags|default:'blue' }}-100 text-{{ message.tags|default:'blue' }}-800 px-4 py-2 rounded mb-2">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <!-- Barra de busca -->
+        <div class="mb-6">
+            <form method="get" action="{% url 'listar_contratos' %}" class="flex flex-wrap gap-2">
+                <input class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                       type="text" 
+                       name="busca" 
+                       placeholder="Buscar por Referência, Fornecedor, CNPJ ou Usuário" 
+                       value="{{ request.GET.busca }}">
+                <button class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-600" type="submit">⌕ Buscar</button>
+                <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400" 
+                        type="submit" name="minhas_requisicoes" value="true">
+                    Meus contratos
+                </button>
+                <select class="px-4 py-2 border rounded-md" name="status" onchange="this.form.submit()">
+                    <option value="">Status</option>
+                    <option value="ativo" {% if request.GET.status == 'ativo' %}selected{% endif %}>Ativo</option>
+                    <option value="inativo" {% if request.GET.status == 'inativo' %}selected{% endif %}>Inativo</option>
+                </select>
+                {% if request.GET.busca or request.GET.minhas_requisicoes == 'true' or request.GET.status %}
+                <a href="{% url 'listar_contratos' %}" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Limpar</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="relative mt-6">
+            <!-- Título -->
+            <div class="text-center mb-4">
+                <h2 class="text-xl font-bold text-sky-900 flex items-center justify-center space-x-2">
+                    <span>Últimos Contratos Adicionados</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16l4-4-4-4m8 0v8" />
+                    </svg>
+                </h2>
+                <p class="text-sm text-gray-600 mt-1">Aqui estão os contratos mais recentes cadastrados no sistema.</p>
+            </div>
+        
+            <!-- Retângulos com informações -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+                {% for contrato in contratos_recente|slice:":2" %}
+                <div class="bg-white shadow-lg rounded-lg p-4 border-l-4 {% if forloop.first %}border-blue-500{% else %}border-green-500{% endif %}">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ contrato.referencia_contrato }}</h3>
+                    <p class="text-sm text-gray-600">
+                        <strong>Fornecedor:</strong> {{ contrato.nome_fornecedor }}
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        <strong>Valor:</strong> {{ contrato.valor|moeda }}
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        <strong>Data:</strong> {{ contrato.data_criacao }}
+                    </p>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-600 text-center">Nenhum contrato recente.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Botão de adicionar -->
+        <div class="mb-6 text-right">
+            <a href="{% url 'adicionar_contrato' %}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+                Adicionar Novo Contrato
+            </a>
+        </div>
+
+        <!-- Tabela -->
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full text-sm text-left text-gray-500">
+                <thead class="bg-sky-600 text-gray-100">
+                    <tr>
+                        <th class="px-4 py-3">Referência</th>
+                        <th class="px-4 py-3">Fornecedor</th>
+                        <th class="px-4 py-3">Categoria</th>
+                        <th class="px-4 py-3">Responsável</th>
+                        <th class="px-4 py-3">Código Contábil</th>
+                        <th class="px-4 py-3">Valor</th>
+                        <th class="px-4 py-3">Área Beneficiada</th>
+                        <th class="px-4 py-3">Data de Criação</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    {% for contrato in page_obj %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3">{{ contrato.referencia_contrato }}</td>
+                        <td class="px-4 py-3">{{ contrato.nome_fornecedor }}</td>
+                        <td class="px-4 py-3">{{ contrato.categoria }}</td>
+                        <td class="px-4 py-3">{{ contrato.responsavel }}</td>
+                        <td class="px-4 py-3">{{ contrato.c_contabil }}</td>
+                        <td class="px-4 py-3">{{ contrato.valor|moeda }}</td>
+                        <td class="px-4 py-3">{{ contrato.area_beneficiada }}</td>
+                        <td class="px-4 py-3">{{ contrato.data_criacao }}</td>
+                        <td class="px-4 py-3">
+                            <span class="{% if contrato.status == 'ativo' %}text-green-500{% else %}text-red-500{% endif %}">
+                                {{ contrato.status|title }}
+                            </span>
+                        </td>
+                        <td class="table-data">
+                            <div class="action-buttons flex space-x-2">
+                                <a href="{% url 'visualizar_contrato' contrato.id %}" class="button px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all duration-200">⌕</a>
+                                <a href="{% url 'editar_contrato' contrato.id %}" class="button px-3 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-all duration-200">✎</a>
+                                <a href="{% url 'encerrar_contrato' contrato.id %}" 
+                                   class="button encerrar-button px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-200"
+                                   onclick="return confirmarEncerramento('{{ contrato.referencia_contrato }}');">⛌</a>
+                                <a href="{% url 'historico_contrato' contrato.id %}" class="px-3 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-all duration-200">⟳</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="px-4 py-3 text-center">Nenhum contrato cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginação -->
+        <div class="mt-4 flex justify-between items-center">
+            {% if page_obj.has_previous %}
+            <a href="?page=1{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}" 
+               class="text-blue-500 hover:underline">Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}" 
+               class="text-blue-500 hover:underline">Anterior</a>
+            {% endif %}
+            <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}" 
+               class="text-blue-500 hover:underline">Próxima</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if busca %}&busca={{ busca }}{% endif %}{% if status %}&status={{ status }}{% endif %}" 
+               class="text-blue-500 hover:underline">Última</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,145 @@
+/* Reset para garantir que estilos globais não interfiram */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo específico para o conteúdo de listar pastas */
+.listar-pastas-container {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: #e0e0f1;
+    padding: 20px;
+    margin-top: 80px; /* Para ajustar o espaço quando há um menu fixo no topo */
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.pastas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: left;
+}
+
+.pasta-item {
+    background-color: white;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+.pasta-item:hover {
+    transform: scale(1.05);
+}
+
+.pasta-item-icon {
+    font-size: 5.5em;
+    color: #0740ab;
+    margin-bottom: 8px;
+}
+
+.pasta-item-name {
+    font-size: 1em;
+    color: #2c3e50;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pasta-item a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.pasta-item a:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.add-pasta-link {
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 1.1em;
+    margin-top: 25px;
+    text-decoration: none;
+    margin-left: 400px;
+    margin-right: 400px;
+}
+
+.add-pasta-link:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.search-input {
+    width: 30% !important;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.filter-button {
+    padding: 8px 15px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #1a252f;
+}
+
+.search-input {
+    width: 60%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.filter-button {
+    padding: 12px 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #1a252f;
+}
+
+.cancel-button {
+    padding: 12px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #c0392b;
+}

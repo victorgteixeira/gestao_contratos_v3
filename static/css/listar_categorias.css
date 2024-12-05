@@ -1,0 +1,62 @@
+/* Estilos específicos para a tela de listar categorias */
+.listar-categorias-container {
+    font-family: Arial, sans-serif; /* Fonte padrão */
+    background-color: #f8f9fa; /* Fundo claro */
+    color: #333; /* Texto padrão */
+    padding: 20px; /* Espaçamento interno */
+}
+
+.listar-categorias-container h1 {
+    color: #2c3e50; /* Cor do título */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+}
+
+.listar-categorias-container table {
+    width: 100%; /* Tabela ocupa toda a largura */
+    border-collapse: collapse; /* Remove espaços entre as células */
+    margin-bottom: 20px; /* Espaçamento abaixo da tabela */
+}
+
+.listar-categorias-container th,
+.listar-categorias-container td {
+    padding: 12px; /* Espaçamento interno das células */
+    text-align: left; /* Alinhamento à esquerda */
+    border: 1px solid #ddd; /* Borda sutil */
+}
+
+.listar-categorias-container th {
+    background-color: #2c3e50; /* Cor de fundo dos cabeçalhos */
+    color: white; /* Cor do texto dos cabeçalhos */
+}
+
+.listar-categorias-container tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+.listar-categorias-container tr:hover {
+    background-color: #d1e7fd; /* Cor de fundo ao passar o mouse */
+}
+
+.listar-categorias-footer button {
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    background-color: #2c3e50; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: background-color 0.3s; /* Transição suave */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: bold; /* Fonte em negrito */
+}
+
+.listar-categorias-footer button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+/* Especificidade extra para evitar conflitos */
+.listar-categorias-footer a button {
+    background-color: white;
+    color: #2c3e50;
+    text-decoration: none; /* Remove sublinhado do link */
+}

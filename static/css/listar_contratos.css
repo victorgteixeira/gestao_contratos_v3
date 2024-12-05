@@ -1,0 +1,242 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1500px; /* Limita a largura do conteúdo */
+    margin: 0 auto; /* Centraliza o container */
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para destaque */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: left;
+    margin-bottom: 0px; /* Espaço abaixo do título */
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #2c3e50;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Permite rolagem horizontal em telas pequenas */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: #fff;
+    border-radius: 8px; /* Bordas arredondadas para a tabela */
+    overflow: hidden; /* Oculta bordas externas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+th, td {
+    padding: 12px; /* Aumenta o espaço interno */
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold; /* Aumenta o peso da fonte do cabeçalho */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Um pouco mais claro para linhas pares */
+}
+
+tr:hover {
+    background-color: #e2e2e2; /* Cor de destaque ao passar o mouse */
+}
+
+/* Mensagens de sucesso */
+.success {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #d4edda; /* Verde claro */
+    color: #155724; /* Verde escuro */
+    border: 1px solid #c3e6cb; /* Verde médio */
+}
+
+/* Mensagens de erro */
+.error {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24; /* Vermelho escuro */
+    border: 1px solid #f5c6cb; /* Vermelho médio */
+}
+
+/* Mensagens de aviso */
+.warning {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #fff3cd; /* Amarelo claro */
+    color: #856404; /* Amarelo escuro */
+    border: 1px solid #ffeeba; /* Amarelo médio */
+}
+
+/* Mensagens de informação */
+.info {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #d1ecf1; /* Azul claro */
+    color: #0c5460; /* Azul escuro */
+    border: 1px solid #bee5eb; /* Azul médio */
+}
+
+
+.button-container {
+    margin-bottom: 20px;
+    margin-top: 50px; /* Aumenta a margem superior para posicionar mais para baixo */
+    text-align: left; /* Alinha o botão à esquerda */
+}
+
+.add-button {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #2c3e50; /* Cor do botão */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Transição suave na cor de fundo */
+}
+
+.add-button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+
+.encerrar-button {
+    background-color: #c00; /* Cor para o botão de encerrar */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transição suave na cor de fundo */
+}
+
+.encerrar-button:hover {
+    background-color: #900; /* Cor ao passar o mouse */
+}
+
+/* Novas classes para estilizar os dados da tabela */
+.table-header {
+    font-weight: bold;
+    font-size: 1.1em; /* Aumenta o tamanho da fonte do cabeçalho */
+}
+
+.table-header2 {
+    font-weight: bold;
+    font-size: 1.1em; /* Aumenta o tamanho da fonte do cabeçalho */
+}
+
+.table-data {
+    font-size: 1em; /* Ajusta o tamanho da fonte dos dados */
+}
+
+.table-data a {
+    display: inline-block;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.table-data .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Estilo para as células de status */
+.status-ativo {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724; /* Verde escuro para o texto */
+    font-weight: bold;
+}
+
+.status-encerrado {
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24; /* Vermelho escuro para o texto */
+    font-weight: bold;
+}
+
+.encerrar-button {
+    background-color: #c00; /* Vermelho */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.encerrar-button:hover {
+    background-color: #900;
+}
+
+.serach-input {
+    width: 32% !important;
+}
+
+.status-filter-select {
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    max-width: 8%;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.status-filter-select:hover {
+    background-color: white;
+    color: #2c3e50;
+    border: none;
+    border-radius: 5px;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.icone-animado {
+    position: absolute;
+    left: 314px;
+    top: 102px;
+    font-size: 30px;
+    color: #2c3e50;
+    animation: bounce 2s infinite;  
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+}
